@@ -14,6 +14,10 @@ public class GameScene: SKScene {
     var center: CGPoint = CGPoint()
     var toti: SKSpriteNode = SKSpriteNode(imageNamed: "sprite_TotiIdleHappy00")
     var butQuest: SKSpriteNode = SKSpriteNode(imageNamed: "butQuest_normal")
+    var hungerBar: SKSpriteNode = SKSpriteNode(imageNamed: "hungerBar100")
+    var funBar: SKSpriteNode = SKSpriteNode(imageNamed: "funBar100")
+    var loveBar: SKSpriteNode = SKSpriteNode(imageNamed: "loveBar100")
+    var energyBar: SKSpriteNode = SKSpriteNode(imageNamed: "energyBar100")
     
     
     
@@ -25,22 +29,32 @@ public class GameScene: SKScene {
         addChild(buttonsBar)
         addChild(toti)
         addChild(butQuest)
+        addChild(hungerBar)
+        addChild(loveBar)
+        addChild(energyBar)
+        addChild(funBar)
         
         
-        center = CGPoint(x: size.width/2, y: size.height/2)
         
         buttonsBar.fillColor = #colorLiteral(red: 0.8415967226, green: 0.9332836866, blue: 0.8614316583, alpha: 1)
         buttonsBar.lineWidth = 0
         
         toti.setScale(0.12)
-        butQuest.setScale(0.1)
+        butQuest.setScale(0.11)
+        hungerBar.setScale(0.08)
+        funBar.setScale(0.08)
+        loveBar.setScale(0.08)
+        energyBar.setScale(0.08)
     }
     
     public override func didChangeSize(_ oldSize: CGSize) {
         // setting positions
         buttonsBar.position.y = -self.size.height/2
-        toti.position.y = -self.size.height/2 + buttonsBar.frame.height + toti.size.height/10
-        butQuest.position = CGPoint(x: self.size.width/2 - butQuest.size.width/2 - 16, y: self.size.height/2 - butQuest.size.height)
+        toti.position.y = -self.size.height/2 + buttonsBar.frame.height + 16
+        butQuest.position = CGPoint(x: self.size.width/2 - butQuest.size.width/2 - 8, y: self.size.height/2 - butQuest.size.height/2 - 32)
+        hungerBar.position = CGPoint(x: -self.size.width/4, y: butQuest.position.y - hungerBar.size.height)
+        energyBar.position = CGPoint(x: hungerBar.position.x, y: hungerBar.position.y - hungerBar.size.height)
+        funBar.position = CGPoint(x: self.size.width/4, y: hungerBar.position.y)
         
     }
 
