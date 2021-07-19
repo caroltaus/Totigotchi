@@ -52,9 +52,10 @@ public class GameScene: SKScene {
         buttonsBar.position.y = -self.size.height/2
         toti.position.y = -self.size.height/2 + buttonsBar.frame.height + 16
         butQuest.position = CGPoint(x: self.size.width/2 - butQuest.size.width/2 - 8, y: self.size.height/2 - butQuest.size.height/2 - 32)
-        hungerBar.position = CGPoint(x: -self.size.width/4, y: butQuest.position.y - hungerBar.size.height)
+        hungerBar.position = CGPoint(x: -self.size.width/4.5, y: butQuest.position.y - hungerBar.size.height)
         energyBar.position = CGPoint(x: hungerBar.position.x, y: hungerBar.position.y - hungerBar.size.height)
-        funBar.position = CGPoint(x: self.size.width/4, y: hungerBar.position.y)
+        funBar.position = CGPoint(x: self.size.width/4.5, y: hungerBar.position.y)
+        loveBar.position = CGPoint(x: funBar.position.x, y: energyBar.position.y)
         
     }
 
