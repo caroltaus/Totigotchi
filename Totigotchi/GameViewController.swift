@@ -11,6 +11,10 @@ class GameViewController: UIViewController {
 
     public let scene = GameScene()
     
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+            return UIRectEdge.bottom
+        }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let view = SKView()
