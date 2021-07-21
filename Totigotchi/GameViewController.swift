@@ -21,6 +21,7 @@ class GameViewController: UIViewController {
         scene.scaleMode = .resizeFill
         view.presentScene(scene)
         self.view = view
+        //view.showsNodeCount = true
     }
 
 
