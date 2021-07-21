@@ -62,10 +62,10 @@ public class GameScene: SKScene {
         funBar.setScale(0.08)
         loveBar.setScale(0.08)
         energyBar.setScale(0.08)
-        foodButton.setScale(0.052)
-        funButton.setScale(0.052)
-        sleepButton.setScale(0.052)
-        medButton.setScale(0.052)
+        foodButton.setScale(0.053)
+        funButton.setScale(0.053)
+        sleepButton.setScale(0.053)
+        medButton.setScale(0.053)
         litter.setScale(0.09)
     }
     
@@ -83,10 +83,10 @@ public class GameScene: SKScene {
         funBar.position = CGPoint(x: self.size.width/4.5, y: hungerBar.position.y)
         loveBar.position = CGPoint(x: funBar.position.x, y: energyBar.position.y)
         
-        let margin: CGFloat = 16
-        var posiBut: CGPoint = CGPoint(x: 0, y: buttonsBar.frame.size.height/2 - foodButton.size.height/2 + 4)
+        let margin: CGFloat = 20
+        var posiBut: CGPoint = CGPoint(x: 0, y: buttonsBar.frame.size.height/2 - foodButton.size.height/2 - 4)
         let deltaPos: CGFloat = (self.size.width - (2 * margin)) / 4
-        posiBut.x = (margin + deltaPos) - self.size.width/2 - foodButton.size.width/2
+        posiBut.x = (margin + deltaPos) - self.size.width/2 - foodButton.size.width/2 - 6
         print(self.size.width)
         print(posiBut)
         foodButton.position = posiBut
@@ -155,6 +155,9 @@ public class GameScene: SKScene {
                 else if node.name == "litter"{
             
                 }
+                else if node.name == "fun" {
+                    funButton = SKSpriteNode(imageNamed: "butFun_pressed")
+                }
             }
         }
     }
@@ -170,7 +173,7 @@ public class GameScene: SKScene {
                     print("parei de clicar")
                 }
                 else if node.name == "fun" {
-                    print("toti")
+                    funButton = SKSpriteNode(imageNamed: "butFun_normal")
                     let texPlaying: [SKTexture] = [
                         SKTexture(imageNamed: "totiPlay_0"),
                         SKTexture(imageNamed: "totiPlay_1"),
