@@ -62,10 +62,10 @@ public class GameScene: SKScene {
         funBar.setScale(0.08)
         loveBar.setScale(0.08)
         energyBar.setScale(0.08)
-        foodButton.setScale(0.052)
-        funButton.setScale(0.052)
-        sleepButton.setScale(0.052)
-        medButton.setScale(0.052)
+        foodButton.setScale(0.053)
+        funButton.setScale(0.053)
+        sleepButton.setScale(0.053)
+        medButton.setScale(0.053)
         litter.setScale(0.09)
     }
     
@@ -74,7 +74,7 @@ public class GameScene: SKScene {
         // --- setting positions ---
         
         buttonsBar.position.y = -self.size.height/2
-        toti.position.y = -self.size.height/2 + buttonsBar.frame.height + 16
+        toti.position.y = -self.size.height/2 + buttonsBar.frame.height/2 + toti.size.height/2 + 16
         toti.zPosition = -1
         butQuest.position = CGPoint(x: self.size.width/2 - butQuest.size.width/2 - 8, y: self.size.height/2 - butQuest.size.height/2 - 32)
         
@@ -83,12 +83,11 @@ public class GameScene: SKScene {
         funBar.position = CGPoint(x: self.size.width/4.5, y: hungerBar.position.y)
         loveBar.position = CGPoint(x: funBar.position.x, y: energyBar.position.y)
         
-        let margin: CGFloat = 16
-        var posiBut: CGPoint = CGPoint(x: 0, y: buttonsBar.frame.size.height/2 - foodButton.size.height/2 + 4)
+        let margin: CGFloat = 20
+        var posiBut: CGPoint = CGPoint(x: 0, y: buttonsBar.frame.size.height/2 - foodButton.size.height/2 - 4)
         let deltaPos: CGFloat = (self.size.width - (2 * margin)) / 4
-        posiBut.x = (margin + deltaPos) - self.size.width/2 - foodButton.size.width/2
-        print(self.size.width)
-        print(posiBut)
+        posiBut.x = (margin + deltaPos) - self.size.width/2 - foodButton.size.width/2 - 6
+        
         foodButton.position = posiBut
         posiBut.x += deltaPos
         funButton.position = posiBut
@@ -148,12 +147,21 @@ public class GameScene: SKScene {
                 if node.name == "question" {
                     print("clicado")
                 }
-                else if node.name == "toti" {
-                 
-                  
-                }
+                
                 else if node.name == "litter"{
             
+                }
+                else if node.name == "food" {
+                    foodButton.texture = SKTexture(imageNamed: "butFood_pressed")
+                }
+                else if node.name == "fun" {
+                    funButton.texture = SKTexture(imageNamed: "butFun_pressed")
+                }
+                else if node.name == "sleep" {
+                    sleepButton.texture = SKTexture(imageNamed: "butSleep_pressed")
+                }
+                else if node.name == "med" {
+                    medButton.texture = SKTexture(imageNamed: "butMed_pressed")
                 }
             }
         }
@@ -169,12 +177,41 @@ public class GameScene: SKScene {
                 if node.name == "question" {
                     print("parei de clicar")
                 }
+                else if node.name == "toti" {
+                    print("clique no totinho")
+                    let texLove: [SKTexture] = [
+                        SKTexture(imageNamed: "love_0"),
+                        SKTexture(imageNamed: "love_1"),
+                        SKTexture(imageNamed: "love_2"),
+                        SKTexture(imageNamed: "love_3"),
+                        SKTexture(imageNamed: "love_4"),
+                        SKTexture(imageNamed: "love_5")
+                        
+                    ]
+                    
+                    for t in texLove {
+                        t.filteringMode = .nearest
+                    }
+                    
+                    let love = SKAction.animate(with: texLove, timePerFrame: 0.2)
+                    let loveLoop = SKAction.repeat(love, count: 1)
+                    
+                    toti.run(loveLoop, completion: {
+                        self.idleAnimation()
+                    })
+                  
+                }
+                else if node.name == "food" {
+                    foodButton.texture = SKTexture(imageNamed: "butFood_normal")
+                }
                 else if node.name == "fun" {
-                    print("toti")
+                    funButton.texture = SKTexture(imageNamed: "butFun_normal")
                     let texPlaying: [SKTexture] = [
                         SKTexture(imageNamed: "totiPlay_0"),
                         SKTexture(imageNamed: "totiPlay_1"),
                         SKTexture(imageNamed: "totiPlay_2"),
+                        SKTexture(imageNamed: "totiPlay_3"),
+                        SKTexture(imageNamed: "totiPlay_3"),
                         SKTexture(imageNamed: "totiPlay_3")
                         
                     ]
@@ -183,7 +220,7 @@ public class GameScene: SKScene {
                         t.filteringMode = .nearest
                     }
                     
-                    let playing = SKAction.animate(with: texPlaying, timePerFrame: 0.2)
+                    let playing = SKAction.animate(with: texPlaying, timePerFrame: 0.3)
                     
                     let playingLoop = SKAction.repeat(playing, count: 3)
                     
@@ -191,10 +228,38 @@ public class GameScene: SKScene {
                         self.idleAnimation()
                     })
                     
-                  
+                }
+                else if node.name == "sleep" {
+                    sleepButton.texture = SKTexture(imageNamed: "butSleep_normal")
+                    
+                    let texSleeping: [SKTexture] = [
+                        SKTexture(imageNamed: "sleep_0"),
+                        SKTexture(imageNamed: "sleep_1"),
+                        SKTexture(imageNamed: "sleep_2"),
+                        SKTexture(imageNamed: "sleep_3"),
+                        SKTexture(imageNamed: "sleep_4")
+                        
+                    ]
+                    
+                    for t in texSleeping {
+                        t.filteringMode = .nearest
+                    }
+                    
+                    let sleeping = SKAction.animate(with: texSleeping, timePerFrame: 0.3)
+                    
+                    let sleepingLoop = SKAction.repeat(sleeping, count: 3)
+                    
+                    toti.run(sleepingLoop, completion: {
+                        self.idleAnimation()
+                    })
+                    
+                    
+                }
+                else if node.name == "med" {
+                    medButton.texture = SKTexture(imageNamed: "butMed_normal")
                 }
                 else if node.name == "litter"{
-                    print("caixinah")
+                    print("caixinha")
                 }
             }
         }
