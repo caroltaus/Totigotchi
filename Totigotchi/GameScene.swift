@@ -75,6 +75,7 @@ public class GameScene: SKScene {
         
         buttonsBar.position.y = -self.size.height/2
         toti.position.y = -self.size.height/2 + buttonsBar.frame.height + 16
+        toti.zPosition = -1
         butQuest.position = CGPoint(x: self.size.width/2 - butQuest.size.width/2 - 8, y: self.size.height/2 - butQuest.size.height/2 - 32)
         
         hungerBar.position = CGPoint(x: -self.size.width/4.5, y: butQuest.position.y - hungerBar.size.height)
