@@ -11,23 +11,58 @@ import SpriteKit
 class HowToPlay: SKNode {
     
     var bg: SKSpriteNode = SKSpriteNode(color: .black, size: .screenSize())
-    var bgHTP: SKShapeNode = SKShapeNode(rectOf: CGSize(width: 300, height: 600))
+    var bgHTP: SKShapeNode = SKShapeNode(rectOf: CGSize(width: 320, height: 600))
     var closeButton: SKSpriteNode = SKSpriteNode(imageNamed: "butX_normal")
     var closeButtonTextures: [SKTexture] = [SKTexture(imageNamed: "butX_normal"), SKTexture(imageNamed: "butX_pressed")]
     var closeButtonAction: (() -> Void)?
+    var HTPTitle: SKLabelNode = SKLabelNode(fontNamed: "Kongtext")
+    var HTPText: SKLabelNode = SKLabelNode(fontNamed: "Kongtext")
+    var AbtTitle: SKLabelNode = SKLabelNode(fontNamed: "Kongtext")
+    var AbtText: SKLabelNode = SKLabelNode(fontNamed: "Kongtext")
     
     override init() {
         super.init()
         addChild(bg)
         addChild(bgHTP)
         bgHTP.addChild(closeButton)
+        bgHTP.addChild(HTPTitle)
+        bgHTP.addChild(HTPText)
+        bgHTP.addChild(AbtTitle)
+        bgHTP.addChild(AbtText)
         bg.alpha = 0.55
         bgHTP.fillColor = .white
         closeButton.setScale(0.11)
         bg.zPosition = 300
         bgHTP.zPosition = 301
+        
         closeButton.zPosition = 302
         closeButton.name = "close"
+        closeButton.position = CGPoint(x: 150, y: 290)
+        
+        HTPTitle.fontColor = .black
+        HTPTitle.text = "How To Play"
+        HTPTitle.fontSize = 20
+        HTPTitle.position = CGPoint(x: 0, y: 270)
+        
+        HTPText.fontColor = .black
+        HTPText.text = "To take care of your Toti pay attention to his needs. The status bars on top, if he is sick, and if his litter box is clean. You can attend to them by tapping on Toti, on the buttons at the bottom of the screen and on his litter box. \n\nBy taking good care of him he will be happy and healthy, and love you forever."
+        HTPText.numberOfLines = 0
+        HTPText.preferredMaxLayoutWidth = 290
+        HTPText.fontSize = 15
+        HTPText.position = CGPoint(x: 0, y: -70)
+        
+        AbtTitle.fontColor = .black
+        AbtTitle.text = "About Toti"
+        AbtTitle.fontSize = 20
+        AbtTitle.position = CGPoint(x: 0, y: -120)
+        
+        AbtText.fontColor = .black
+        AbtText.text = "Totigotchi was inspired by the best cat in the world, Prince Nicholas III. You can follow him on instagram @principenicholas."
+        AbtText.numberOfLines = 0
+        AbtText.preferredMaxLayoutWidth = 290
+        AbtText.fontSize = 15
+        AbtText.position = CGPoint(x: 0, y: -260)
+        
         
     }
     

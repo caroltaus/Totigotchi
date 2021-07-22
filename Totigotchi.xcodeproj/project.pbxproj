@@ -16,6 +16,7 @@
 		C86048A626A5EB8F00574FBB /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86048A526A5EB8F00574FBB /* GameScene.swift */; };
 		C86048A926A9FEC800574FBB /* ScreenSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86048A826A9FEC800574FBB /* ScreenSize.swift */; };
 		C86048AB26AA084300574FBB /* HowToPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86048AA26AA084300574FBB /* HowToPlay.swift */; };
+		C86048AE26AA2F0C00574FBB /* kongtext.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C86048AD26AA2F0C00574FBB /* kongtext.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		C86048A526A5EB8F00574FBB /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		C86048A826A9FEC800574FBB /* ScreenSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenSize.swift; sourceTree = "<group>"; };
 		C86048AA26AA084300574FBB /* HowToPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToPlay.swift; sourceTree = "<group>"; };
+		C86048AD26AA2F0C00574FBB /* kongtext.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = kongtext.ttf; path = ../../../../Downloads/kongtext/kongtext.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 		C860489026A5E09A00574FBB /* Totigotchi */ = {
 			isa = PBXGroup;
 			children = (
+				C86048AC26AA2EF400574FBB /* Font */,
 				C860489126A5E09A00574FBB /* AppDelegate.swift */,
 				C860489326A5E09A00574FBB /* SceneDelegate.swift */,
 				C860489526A5E09A00574FBB /* GameViewController.swift */,
@@ -74,6 +77,14 @@
 				C86048AA26AA084300574FBB /* HowToPlay.swift */,
 			);
 			path = Totigotchi;
+			sourceTree = "<group>";
+		};
+		C86048AC26AA2EF400574FBB /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				C86048AD26AA2F0C00574FBB /* kongtext.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,6 +144,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C86048AE26AA2F0C00574FBB /* kongtext.ttf in Resources */,
 				C860489E26A5E09C00574FBB /* LaunchScreen.storyboard in Resources */,
 				C860489B26A5E09C00574FBB /* Assets.xcassets in Resources */,
 				C860489926A5E09A00574FBB /* Main.storyboard in Resources */,
