@@ -23,6 +23,8 @@ public class GameScene: SKScene {
     var sleepButton: SKSpriteNode = SKSpriteNode(imageNamed: "butSleep_normal")
     var medButton: SKSpriteNode = SKSpriteNode(imageNamed: "butMed_normal")
     var litter: SKSpriteNode = SKSpriteNode(imageNamed: "litter_clean")
+    var fishie: SKSpriteNode = SKSpriteNode(imageNamed: "fish_0")
+
     
     
     public override func didMove(to view: SKView) {
@@ -42,6 +44,8 @@ public class GameScene: SKScene {
         buttonsBar.addChild(sleepButton)
         buttonsBar.addChild(medButton)
         addChild(litter)
+        addChild(fishie)
+        
         
         
         
@@ -67,6 +71,7 @@ public class GameScene: SKScene {
         sleepButton.setScale(0.053)
         medButton.setScale(0.053)
         litter.setScale(0.09)
+        fishie.setScale(0.06)
     }
     
     public override func didChangeSize(_ oldSize: CGSize) {
@@ -99,6 +104,8 @@ public class GameScene: SKScene {
         litter.position = CGPoint(x: 120, y: 0)
         
         
+        fishie.position = CGPoint(x: toti.position.x, y: toti.position.y - 28)
+        
         
         idleAnimation()
         
@@ -107,6 +114,7 @@ public class GameScene: SKScene {
     }
 
     public func idleAnimation(){
+        fishie.isHidden = true
         let texHappy: [SKTexture] = [
             SKTexture(imageNamed: "totiHappy_0"),
             SKTexture(imageNamed: "totiHappy_0"),
@@ -203,6 +211,56 @@ public class GameScene: SKScene {
                 }
                 else if node.name == "food" {
                     foodButton.texture = SKTexture(imageNamed: "butFood_normal")
+                    
+                    fishie.isHidden = false
+                    
+                    let texFish: [SKTexture] = [
+                        SKTexture(imageNamed: "fish_0"),
+                        SKTexture(imageNamed: "fish_0"),
+                        SKTexture(imageNamed: "fish_1"),
+                        SKTexture(imageNamed: "fish_2"),
+                        SKTexture(imageNamed: "fish_3")
+                    ]
+                    
+                    for t in texFish {
+                        t.filteringMode = .nearest
+                    }
+                    
+                    let fish = SKAction.animate(with: texFish, timePerFrame: 0.6)
+                    let fishLoop = SKAction.repeat(fish, count: 1)
+                    fishie.run(fishLoop)
+                    
+                    
+                    let texEating: [SKTexture] = [
+                        SKTexture(imageNamed: "eat_00"),
+                        SKTexture(imageNamed: "eat_01"),
+                        SKTexture(imageNamed: "eat_02"),
+                        SKTexture(imageNamed: "eat_03"),
+                        SKTexture(imageNamed: "eat_04"),
+                        SKTexture(imageNamed: "eat_05"),
+                        SKTexture(imageNamed: "eat_06"),
+                        SKTexture(imageNamed: "eat_07"),
+                        SKTexture(imageNamed: "eat_08"),
+                        SKTexture(imageNamed: "eat_09"),
+                        SKTexture(imageNamed: "eat_10"),
+                        SKTexture(imageNamed: "eat_11"),
+                        SKTexture(imageNamed: "eat_12"),
+                        
+                        
+                    ]
+                    
+                    for t in texEating {
+                        t.filteringMode = .nearest
+                    }
+                    
+                    let eating = SKAction.animate(with: texEating, timePerFrame: 0.2)
+                    
+                    let eatingLoop = SKAction.repeat(eating, count: 1)
+                    
+                    toti.run(eatingLoop, completion: {
+                        self.idleAnimation()
+                    })
+                    
                 }
                 else if node.name == "fun" {
                     funButton.texture = SKTexture(imageNamed: "butFun_normal")
@@ -220,9 +278,9 @@ public class GameScene: SKScene {
                         t.filteringMode = .nearest
                     }
                     
-                    let playing = SKAction.animate(with: texPlaying, timePerFrame: 0.3)
+                    let playing = SKAction.animate(with: texPlaying, timePerFrame: 0.2)
                     
-                    let playingLoop = SKAction.repeat(playing, count: 3)
+                    let playingLoop = SKAction.repeat(playing, count: 2)
                     
                     toti.run(playingLoop, completion: {
                         self.idleAnimation()
