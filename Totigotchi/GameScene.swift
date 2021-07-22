@@ -24,6 +24,7 @@ public class GameScene: SKScene {
     var medButton: SKSpriteNode = SKSpriteNode(imageNamed: "butMed_normal")
     var litter: SKSpriteNode = SKSpriteNode(imageNamed: "litter_clean")
     var fishie: SKSpriteNode = SKSpriteNode(imageNamed: "fish_0")
+    var HTP = HowToPlay()
 
     
     
@@ -32,6 +33,7 @@ public class GameScene: SKScene {
         backgroundColor = #colorLiteral(red: 0.9227683544, green: 0.9586974978, blue: 0.9140693545, alpha: 1)
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
+        addChild(HTP)
         addChild(buttonsBar)
         addChild(toti)
         addChild(butQuest)
@@ -45,7 +47,6 @@ public class GameScene: SKScene {
         buttonsBar.addChild(medButton)
         addChild(litter)
         addChild(fishie)
-        
         
         
         
@@ -72,6 +73,8 @@ public class GameScene: SKScene {
         medButton.setScale(0.053)
         litter.setScale(0.09)
         fishie.setScale(0.06)
+      
+        
     }
     
     public override func didChangeSize(_ oldSize: CGSize) {
@@ -81,7 +84,7 @@ public class GameScene: SKScene {
         buttonsBar.position.y = -self.size.height/2
         toti.position.y = -self.size.height/2 + buttonsBar.frame.height/2 + toti.size.height/2 + 16
         toti.zPosition = -1
-        butQuest.position = CGPoint(x: self.size.width/2 - butQuest.size.width/2 - 8, y: self.size.height/2 - butQuest.size.height/2 - 32)
+        butQuest.position = CGPoint(x: self.size.width/2 - butQuest.size.width - 8, y: self.size.height/2 - butQuest.size.height - 28)
         
         hungerBar.position = CGPoint(x: -self.size.width/4.5, y: butQuest.position.y - hungerBar.size.height)
         energyBar.position = CGPoint(x: hungerBar.position.x, y: hungerBar.position.y - hungerBar.size.height)
@@ -105,6 +108,11 @@ public class GameScene: SKScene {
         
         
         fishie.position = CGPoint(x: toti.position.x, y: toti.position.y - 28)
+        
+        HTP.isHidden = true
+        HTP.closeButtonAction = {
+            self.HTP.isHidden = true
+        }
         
         
         idleAnimation()
@@ -153,7 +161,7 @@ public class GameScene: SKScene {
             let touchedNodes = scene.nodes(at: location)
             for node in touchedNodes.reversed() {
                 if node.name == "question" {
-                    print("clicado")
+                    butQuest.texture = SKTexture(imageNamed: "butQuest_pressed")
                 }
                 
                 else if node.name == "litter"{
@@ -183,7 +191,8 @@ public class GameScene: SKScene {
             let touchedNodes = scene.nodes(at: location)
             for node in touchedNodes.reversed() {
                 if node.name == "question" {
-                    print("parei de clicar")
+                    butQuest.texture = SKTexture(imageNamed: "butQuest_normal")
+                    HTP.isHidden = false
                 }
                 else if node.name == "toti" {
                     print("clique no totinho")
