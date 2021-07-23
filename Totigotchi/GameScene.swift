@@ -25,6 +25,7 @@ public class GameScene: SKScene {
     var litter: SKSpriteNode = SKSpriteNode(imageNamed: "litter_clean")
     var fishie: SKSpriteNode = SKSpriteNode(imageNamed: "fish_0")
     var HTP = HowToPlay()
+    var hungerStatus: Int = 7
 
     
     
@@ -108,6 +109,7 @@ public class GameScene: SKScene {
         
         
         fishie.position = CGPoint(x: toti.position.x, y: toti.position.y - 28)
+        fishie.zPosition = 2
         
         HTP.isHidden = true
         HTP.closeButtonAction = {
@@ -195,7 +197,6 @@ public class GameScene: SKScene {
                     HTP.isHidden = false
                 }
                 else if node.name == "toti" {
-                    print("clique no totinho")
                     let texLove: [SKTexture] = [
                         SKTexture(imageNamed: "love_0"),
                         SKTexture(imageNamed: "love_1"),
@@ -228,6 +229,7 @@ public class GameScene: SKScene {
                         SKTexture(imageNamed: "fish_0"),
                         SKTexture(imageNamed: "fish_1"),
                         SKTexture(imageNamed: "fish_2"),
+                        SKTexture(imageNamed: "fish_3"),
                         SKTexture(imageNamed: "fish_3")
                     ]
                     
@@ -235,7 +237,7 @@ public class GameScene: SKScene {
                         t.filteringMode = .nearest
                     }
                     
-                    let fish = SKAction.animate(with: texFish, timePerFrame: 0.6)
+                    let fish = SKAction.animate(with: texFish, timePerFrame: 0.5)
                     let fishLoop = SKAction.repeat(fish, count: 1)
                     fishie.run(fishLoop)
                     
@@ -314,7 +316,7 @@ public class GameScene: SKScene {
                     
                     let sleeping = SKAction.animate(with: texSleeping, timePerFrame: 0.3)
                     
-                    let sleepingLoop = SKAction.repeat(sleeping, count: 3)
+                    let sleepingLoop = SKAction.repeat(sleeping, count: 2)
                     
                     toti.run(sleepingLoop, completion: {
                         self.idleAnimation()
@@ -324,6 +326,31 @@ public class GameScene: SKScene {
                 }
                 else if node.name == "med" {
                     medButton.texture = SKTexture(imageNamed: "butMed_normal")
+                    
+                    let texMed: [SKTexture] = [
+                        SKTexture(imageNamed: "med_0"),
+                        SKTexture(imageNamed: "med_1"),
+                        SKTexture(imageNamed: "med_2"),
+                        SKTexture(imageNamed: "med_3"),
+                        SKTexture(imageNamed: "med_4"),
+                        SKTexture(imageNamed: "med_5")
+                        
+                    ]
+                    
+                    for t in texMed {
+                        t.filteringMode = .nearest
+                    }
+                    
+                    let medic = SKAction.animate(with: texMed, timePerFrame: 0.3)
+                    
+                    let medLoop = SKAction.repeat(medic, count: 1)
+                    
+                    toti.run(medLoop, completion: {
+                        self.idleAnimation()
+                    })
+
+                    
+                    
                 }
                 else if node.name == "litter"{
                     print("caixinha")

@@ -30,7 +30,7 @@ class HowToPlay: SKNode {
         bgHTP.addChild(AbtTitle)
         bgHTP.addChild(AbtText)
         bg.alpha = 0.55
-        bgHTP.fillColor = .white
+        bgHTP.fillColor = #colorLiteral(red: 0.9025678635, green: 1, blue: 0.9010218978, alpha: 1)
         closeButton.setScale(0.11)
         bg.zPosition = 300
         bgHTP.zPosition = 301
