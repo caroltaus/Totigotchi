@@ -41,27 +41,27 @@ class HowToPlay: SKNode {
         
         HTPTitle.fontColor = .black
         HTPTitle.text = "How To Play"
-        HTPTitle.fontSize = 20
+        HTPTitle.fontSize = 21
         HTPTitle.position = CGPoint(x: 0, y: 270)
         
         HTPText.fontColor = .black
         HTPText.text = "To take care of your Toti pay attention to his needs. The status bars on top, if he is sick, and if his litter box is clean. You can attend to them by tapping on Toti, on the buttons at the bottom of the screen and on his litter box. \n\nBy taking good care of him he will be happy and healthy, and love you forever."
         HTPText.numberOfLines = 0
         HTPText.preferredMaxLayoutWidth = 290
-        HTPText.fontSize = 15
-        HTPText.position = CGPoint(x: 0, y: -70)
+        HTPText.fontSize = 16
+        HTPText.position = CGPoint(x: 0, y: -90)
         
         AbtTitle.fontColor = .black
         AbtTitle.text = "About Toti"
-        AbtTitle.fontSize = 20
-        AbtTitle.position = CGPoint(x: 0, y: -120)
+        AbtTitle.fontSize = 21
+        AbtTitle.position = CGPoint(x: 0, y: -130)
         
         AbtText.fontColor = .black
         AbtText.text = "Totigotchi was inspired by the best cat in the world, Prince Nicholas III. You can follow him on instagram @principenicholas."
         AbtText.numberOfLines = 0
         AbtText.preferredMaxLayoutWidth = 290
-        AbtText.fontSize = 15
-        AbtText.position = CGPoint(x: 0, y: -260)
+        AbtText.fontSize = 16
+        AbtText.position = CGPoint(x: 0, y: -285)
         
         
     }
