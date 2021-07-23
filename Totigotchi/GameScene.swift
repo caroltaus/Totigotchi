@@ -25,7 +25,11 @@ public class GameScene: SKScene {
     var litter: SKSpriteNode = SKSpriteNode(imageNamed: "litter_clean")
     var fishie: SKSpriteNode = SKSpriteNode(imageNamed: "fish_0")
     var HTP = HowToPlay()
-    var hungerStatus: Int = 7
+    var hungerStatus: Int = 5
+    var funStatus: Int = 5
+    var energyStatus: Int = 7
+    var loveStatus: Int = 7
+    var greenStatus: Int = 0
 
     
     
@@ -122,38 +126,136 @@ public class GameScene: SKScene {
         
         
     }
+    
+    public func statusColors() -> Int{
+        greenStatus = 0
+    
+        if hungerStatus >= 7 {
+            greenStatus += 1
+        }
+        
+        if funStatus >= 7 {
+            greenStatus += 1
+        }
+       
+
+        if energyStatus >= 7 {
+            greenStatus += 1
+        }
+ 
+
+        if loveStatus >= 7 {
+            greenStatus += 1
+        }
+        
+        return greenStatus
+
+    }
 
     public func idleAnimation(){
         fishie.isHidden = true
-        let texHappy: [SKTexture] = [
-            SKTexture(imageNamed: "totiHappy_0"),
-            SKTexture(imageNamed: "totiHappy_0"),
-            SKTexture(imageNamed: "totiHappy_0"),
-            SKTexture(imageNamed: "totiHappy_0"),
-            SKTexture(imageNamed: "totiHappy_0"),
-            SKTexture(imageNamed: "totiHappy_0"),
-            SKTexture(imageNamed: "totiHappy_0"),
-            SKTexture(imageNamed: "totiHappy_0"),
-            SKTexture(imageNamed: "totiHappy_0"),
-            SKTexture(imageNamed: "totiHappy_0"),
-            SKTexture(imageNamed: "totiHappy_0"),
-            SKTexture(imageNamed: "totiHappy_0"),
-            SKTexture(imageNamed: "totiHappy_0"),
-            SKTexture(imageNamed: "totiHappy_1"),
-            SKTexture(imageNamed: "totiHappy_2"),
-            SKTexture(imageNamed: "totiHappy_3"),
-            SKTexture(imageNamed: "totiHappy_4"),
-            SKTexture(imageNamed: "totiHappy_5")
-        ]
         
-        for t in texHappy {
-            t.filteringMode = .nearest
+        greenStatus = statusColors()
+        
+        if greenStatus >= 3 {
+            let texHappy: [SKTexture] = [
+                SKTexture(imageNamed: "totiHappy_0"),
+                SKTexture(imageNamed: "totiHappy_0"),
+                SKTexture(imageNamed: "totiHappy_0"),
+                SKTexture(imageNamed: "totiHappy_0"),
+                SKTexture(imageNamed: "totiHappy_0"),
+                SKTexture(imageNamed: "totiHappy_0"),
+                SKTexture(imageNamed: "totiHappy_0"),
+                SKTexture(imageNamed: "totiHappy_0"),
+                SKTexture(imageNamed: "totiHappy_0"),
+                SKTexture(imageNamed: "totiHappy_0"),
+                SKTexture(imageNamed: "totiHappy_0"),
+                SKTexture(imageNamed: "totiHappy_0"),
+                SKTexture(imageNamed: "totiHappy_0"),
+                SKTexture(imageNamed: "totiHappy_1"),
+                SKTexture(imageNamed: "totiHappy_2"),
+                SKTexture(imageNamed: "totiHappy_3"),
+                SKTexture(imageNamed: "totiHappy_4"),
+                SKTexture(imageNamed: "totiHappy_5")
+            ]
+            
+            for t in texHappy {
+                t.filteringMode = .nearest
+            }
+            
+            let happyIdle = SKAction.animate(with: texHappy, timePerFrame: 0.1)
+            
+            let happyLoop = SKAction.repeatForever(happyIdle)
+            toti.run(happyLoop)
         }
         
-        let happyIdle = SKAction.animate(with: texHappy, timePerFrame: 0.1)
+        else if greenStatus == 2 {
+            let texSad: [SKTexture] = [
+                SKTexture(imageNamed: "sad_00"),
+                SKTexture(imageNamed: "sad_01"),
+                SKTexture(imageNamed: "sad_02"),
+                SKTexture(imageNamed: "sad_03"),
+                SKTexture(imageNamed: "sad_04"),
+                SKTexture(imageNamed: "sad_05"),
+                SKTexture(imageNamed: "sad_06"),
+                SKTexture(imageNamed: "sad_07"),
+                SKTexture(imageNamed: "sad_08"),
+                SKTexture(imageNamed: "sad_09"),
+                SKTexture(imageNamed: "sad_10"),
+                SKTexture(imageNamed: "sad_11"),
+                SKTexture(imageNamed: "sad_12"),
+                SKTexture(imageNamed: "sad_13"),
+                SKTexture(imageNamed: "sad_14"),
+                SKTexture(imageNamed: "sad_15"),
+            ]
+            
+            for t in texSad {
+                t.filteringMode = .nearest
+            }
+            
+            let sadIdle = SKAction.animate(with: texSad, timePerFrame: 0.1)
+            
+            let sadLoop = SKAction.repeatForever(sadIdle)
+            toti.run(sadLoop)
+            
+        }
         
-        let happyLoop = SKAction.repeatForever(happyIdle)
-        toti.run(happyLoop)
+        else {
+            let texAngry: [SKTexture] = [
+                SKTexture(imageNamed: "angry_00"),
+                SKTexture(imageNamed: "angry_00"),
+                SKTexture(imageNamed: "angry_00"),
+                SKTexture(imageNamed: "angry_00"),
+                SKTexture(imageNamed: "angry_00"),
+                SKTexture(imageNamed: "angry_00"),
+                SKTexture(imageNamed: "angry_00"),
+                SKTexture(imageNamed: "angry_00"),
+                SKTexture(imageNamed: "angry_01"),
+                SKTexture(imageNamed: "angry_02"),
+                SKTexture(imageNamed: "angry_03"),
+                SKTexture(imageNamed: "angry_04"),
+                SKTexture(imageNamed: "angry_05"),
+                SKTexture(imageNamed: "angry_06"),
+                SKTexture(imageNamed: "angry_07"),
+                SKTexture(imageNamed: "angry_08"),
+                SKTexture(imageNamed: "angry_09"),
+                SKTexture(imageNamed: "angry_10"),
+                SKTexture(imageNamed: "angry_11"),
+                SKTexture(imageNamed: "angry_12"),
+                SKTexture(imageNamed: "angry_13")
+            ]
+            
+            for t in texAngry {
+                t.filteringMode = .nearest
+            }
+            
+            let angryIdle = SKAction.animate(with: texAngry, timePerFrame: 0.1)
+            
+            let angryLoop = SKAction.repeatForever(angryIdle)
+            toti.run(angryLoop)
+        }
+        
+            
     }
         
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -166,7 +268,7 @@ public class GameScene: SKScene {
                     butQuest.texture = SKTexture(imageNamed: "butQuest_pressed")
                 }
                 
-                else if node.name == "litter"{
+                else if node.name == "litter" {
             
                 }
                 else if node.name == "food" {
@@ -352,7 +454,7 @@ public class GameScene: SKScene {
                     
                     
                 }
-                else if node.name == "litter"{
+                else if node.name == "litter" {
                     print("caixinha")
                 }
             }
