@@ -26,7 +26,7 @@ public class GameScene: SKScene {
     var fishie: SKSpriteNode = SKSpriteNode(imageNamed: "fish_0")
     var HTP = HowToPlay()
     var hungerStatus: Int = 5
-    var funStatus: Int = 5
+    var funStatus: Int = 7
     var energyStatus: Int = 7
     var loveStatus: Int = 7
     var greenStatus: Int = 0
