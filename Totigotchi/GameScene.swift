@@ -73,11 +73,13 @@ public class GameScene: SKScene {
     var litter: SKSpriteNode = SKSpriteNode(imageNamed: "litter_clean")
     var fishie: SKSpriteNode = SKSpriteNode(imageNamed: "fish_0")
     var HTP = HowToPlay()
+    let defaults = UserDefaults.standard
     var hungerStatus: Int = 5
     var funStatus: Int = 5
     var energyStatus: Int = 5
-    var loveStatus: Int = 7
+    var loveStatus: Int = 5
     var greenStatus: Int = 0
+    
 
     
     
@@ -126,6 +128,13 @@ public class GameScene: SKScene {
         medButton.setScale(0.053)
         litter.setScale(0.09)
         fishie.setScale(0.06)
+        
+        print(hungerStatus)
+        defaults.set(hungerStatus, forKey: "hunger")
+        defaults.set(loveStatus, forKey: "love")
+        defaults.set(funStatus, forKey: "fun")
+        defaults.set(energyStatus, forKey: "energy")
+        
       
         
     }
@@ -133,7 +142,6 @@ public class GameScene: SKScene {
     public override func didChangeSize(_ oldSize: CGSize) {
         
         // --- setting positions ---
-        
         buttonsBar.position.y = -self.size.height/2
         toti.position.y = -self.size.height/2 + buttonsBar.frame.height/2 + toti.size.height/2 + 16
         toti.zPosition = 1
@@ -178,7 +186,11 @@ public class GameScene: SKScene {
     
     public func statusColors() -> Int{
         greenStatus = 0
-    
+        hungerStatus = self.defaults.integer(forKey: "hunger")
+        funStatus = self.defaults.integer(forKey: "fun")
+        energyStatus = self.defaults.integer(forKey: "energy")
+        loveStatus = self.defaults.integer(forKey: "love")
+        
         if hungerStatus >= 7 {
             greenStatus += 1
         }
@@ -309,10 +321,10 @@ public class GameScene: SKScene {
     
     
     public func updateBars() {
-        hungerBar.texture = hungerBarTex[hungerStatus]
-        funBar.texture = funBarTex[funStatus]
-        loveBar.texture = loveBarTex[loveStatus]
-        energyBar.texture = energyBarTex[energyStatus]
+        hungerBar.texture = hungerBarTex[self.defaults.integer(forKey: "hunger")]
+        funBar.texture = funBarTex[self.defaults.integer(forKey: "fun")]
+        loveBar.texture = loveBarTex[self.defaults.integer(forKey: "love")]
+        energyBar.texture = energyBarTex[self.defaults.integer(forKey: "energy")]
     }
         
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -351,14 +363,17 @@ public class GameScene: SKScene {
             let location = touch.location(in: scene)
             let touchedNodes = scene.nodes(at: location)
             for node in touchedNodes.reversed() {
+                
                 if node.name == "question" {
                     butQuest.texture = SKTexture(imageNamed: "butQuest_normal")
                     HTP.isHidden = false
                 }
+                
                 else if node.name == "toti" {
                     
+                    loveStatus = self.defaults.integer(forKey: "love")
                     if loveStatus < 10 {
-                        loveStatus += 1
+                        defaults.set(loveStatus + 1, forKey: "love")
                     }
                     
                     let texLove: [SKTexture] = [
@@ -383,15 +398,16 @@ public class GameScene: SKScene {
                     })
                     
                     updateBars()
-                  
                 }
+                
                 else if node.name == "food" {
                     foodButton.texture = SKTexture(imageNamed: "butFood_normal")
                     
                     fishie.isHidden = false
                     
+                    hungerStatus = self.defaults.integer(forKey: "hunger")
                     if hungerStatus < 10 {
-                        hungerStatus += 1
+                        defaults.set(hungerStatus + 1, forKey: "hunger")
                     }
                     
                     let texFish: [SKTexture] = [
@@ -443,12 +459,14 @@ public class GameScene: SKScene {
                     })
                     
                     updateBars()
-                    
                 }
+                
                 else if node.name == "fun" {
                     funButton.texture = SKTexture(imageNamed: "butFun_normal")
+                    
+                    funStatus = self.defaults.integer(forKey: "fun")
                     if funStatus < 10 {
-                        funStatus += 1
+                        defaults.set(funStatus + 1, forKey: "fun")
                     }
                     
                     let texPlaying: [SKTexture] = [
@@ -480,8 +498,9 @@ public class GameScene: SKScene {
                 else if node.name == "sleep" {
                     sleepButton.texture = SKTexture(imageNamed: "butSleep_normal")
                     
+                    energyStatus = self.defaults.integer(forKey: "energy")
                     if energyStatus < 10 {
-                        energyStatus += 1
+                        defaults.set(energyStatus + 1, forKey: "energy")
                     }
                     
                     let texSleeping: [SKTexture] = [
