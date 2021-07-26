@@ -15,9 +15,57 @@ public class GameScene: SKScene {
     var toti: SKSpriteNode = SKSpriteNode(imageNamed: "totiHappy_0")
     var butQuest: SKSpriteNode = SKSpriteNode(imageNamed: "butQuest_normal")
     var hungerBar: SKSpriteNode = SKSpriteNode(imageNamed: "hungerBar100")
+    var hungerBarTex: [SKTexture] = [SKTexture(imageNamed: "hungerBar0"),
+                                   SKTexture(imageNamed: "hungerBar10"),
+                                   SKTexture(imageNamed: "hungerBar20"),
+                                   SKTexture(imageNamed: "hungerBar30"),
+                                   SKTexture(imageNamed: "hungerBar40"),
+                                   SKTexture(imageNamed: "hungerBar50"),
+                                   SKTexture(imageNamed: "hungerBar60"),
+                                   SKTexture(imageNamed: "hungerBar70"),
+                                   SKTexture(imageNamed: "hungerBar80"),
+                                   SKTexture(imageNamed: "hungerBar90"),
+                                   SKTexture(imageNamed: "hungerBar100")
+    ]
     var funBar: SKSpriteNode = SKSpriteNode(imageNamed: "funBar100")
+    var funBarTex: [SKTexture] = [ SKTexture(imageNamed: "funBar0"),
+                                   SKTexture(imageNamed: "funBar10"),
+                                   SKTexture(imageNamed: "funBar20"),
+                                   SKTexture(imageNamed: "funBar30"),
+                                   SKTexture(imageNamed: "funBar40"),
+                                   SKTexture(imageNamed: "funBar50"),
+                                   SKTexture(imageNamed: "funBar60"),
+                                   SKTexture(imageNamed: "funBar70"),
+                                   SKTexture(imageNamed: "funBar80"),
+                                   SKTexture(imageNamed: "funBar90"),
+                                   SKTexture(imageNamed: "funBar100")
+    ]
     var loveBar: SKSpriteNode = SKSpriteNode(imageNamed: "loveBar100")
+    var loveBarTex: [SKTexture] = [SKTexture(imageNamed: "loveBar0"),
+                                   SKTexture(imageNamed: "loveBar10"),
+                                   SKTexture(imageNamed: "loveBar20"),
+                                   SKTexture(imageNamed: "loveBar30"),
+                                   SKTexture(imageNamed: "loveBar40"),
+                                   SKTexture(imageNamed: "loveBar50"),
+                                   SKTexture(imageNamed: "loveBar60"),
+                                   SKTexture(imageNamed: "loveBar70"),
+                                   SKTexture(imageNamed: "loveBar80"),
+                                   SKTexture(imageNamed: "loveBar90"),
+                                   SKTexture(imageNamed: "loveBar100")
+    ]
     var energyBar: SKSpriteNode = SKSpriteNode(imageNamed: "energyBar100")
+    var energyBarTex: [SKTexture] = [SKTexture(imageNamed: "energyBar0"),
+                                   SKTexture(imageNamed: "energyBar10"),
+                                   SKTexture(imageNamed: "energyBar20"),
+                                   SKTexture(imageNamed: "energyBar30"),
+                                   SKTexture(imageNamed: "energyBar40"),
+                                   SKTexture(imageNamed: "energyBar50"),
+                                   SKTexture(imageNamed: "energyBar60"),
+                                   SKTexture(imageNamed: "energyBar70"),
+                                   SKTexture(imageNamed: "energyBar80"),
+                                   SKTexture(imageNamed: "energyBar90"),
+                                   SKTexture(imageNamed: "energyBar100")
+    ]
     var foodButton: SKSpriteNode = SKSpriteNode(imageNamed: "butFood_normal")
     var funButton: SKSpriteNode = SKSpriteNode(imageNamed: "butFun_normal")
     var sleepButton: SKSpriteNode = SKSpriteNode(imageNamed: "butSleep_normal")
@@ -26,8 +74,8 @@ public class GameScene: SKScene {
     var fishie: SKSpriteNode = SKSpriteNode(imageNamed: "fish_0")
     var HTP = HowToPlay()
     var hungerStatus: Int = 5
-    var funStatus: Int = 7
-    var energyStatus: Int = 7
+    var funStatus: Int = 5
+    var energyStatus: Int = 5
     var loveStatus: Int = 7
     var greenStatus: Int = 0
 
@@ -122,6 +170,7 @@ public class GameScene: SKScene {
         
         
         idleAnimation()
+        updateBars()
         
         
         
@@ -257,6 +306,14 @@ public class GameScene: SKScene {
         
             
     }
+    
+    
+    public func updateBars() {
+        hungerBar.texture = hungerBarTex[hungerStatus]
+        funBar.texture = funBarTex[funStatus]
+        loveBar.texture = loveBarTex[loveStatus]
+        energyBar.texture = energyBarTex[energyStatus]
+    }
         
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let scene = self
@@ -299,6 +356,11 @@ public class GameScene: SKScene {
                     HTP.isHidden = false
                 }
                 else if node.name == "toti" {
+                    
+                    if loveStatus < 10 {
+                        loveStatus += 1
+                    }
+                    
                     let texLove: [SKTexture] = [
                         SKTexture(imageNamed: "love_0"),
                         SKTexture(imageNamed: "love_1"),
@@ -319,12 +381,18 @@ public class GameScene: SKScene {
                     toti.run(loveLoop, completion: {
                         self.idleAnimation()
                     })
+                    
+                    updateBars()
                   
                 }
                 else if node.name == "food" {
                     foodButton.texture = SKTexture(imageNamed: "butFood_normal")
                     
                     fishie.isHidden = false
+                    
+                    if hungerStatus < 10 {
+                        hungerStatus += 1
+                    }
                     
                     let texFish: [SKTexture] = [
                         SKTexture(imageNamed: "fish_0"),
@@ -374,9 +442,15 @@ public class GameScene: SKScene {
                         self.idleAnimation()
                     })
                     
+                    updateBars()
+                    
                 }
                 else if node.name == "fun" {
                     funButton.texture = SKTexture(imageNamed: "butFun_normal")
+                    if funStatus < 10 {
+                        funStatus += 1
+                    }
+                    
                     let texPlaying: [SKTexture] = [
                         SKTexture(imageNamed: "totiPlay_0"),
                         SKTexture(imageNamed: "totiPlay_1"),
@@ -399,9 +473,16 @@ public class GameScene: SKScene {
                         self.idleAnimation()
                     })
                     
+                    updateBars()
+                    
+                    
                 }
                 else if node.name == "sleep" {
                     sleepButton.texture = SKTexture(imageNamed: "butSleep_normal")
+                    
+                    if energyStatus < 10 {
+                        energyStatus += 1
+                    }
                     
                     let texSleeping: [SKTexture] = [
                         SKTexture(imageNamed: "sleep_0"),
@@ -424,7 +505,7 @@ public class GameScene: SKScene {
                         self.idleAnimation()
                     })
                     
-                    
+                    updateBars()
                 }
                 else if node.name == "med" {
                     medButton.texture = SKTexture(imageNamed: "butMed_normal")
