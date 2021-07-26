@@ -174,7 +174,7 @@ public class GameScene: SKScene {
         posiBut.x += deltaPos
         medButton.position = posiBut
                 
-        litter.position = CGPoint(x: 120, y: 0)
+        litter.position = CGPoint(x: 130, y: 0)
         
         
         fishie.position = CGPoint(x: toti.position.x, y: toti.position.y - 28)
@@ -378,7 +378,7 @@ public class GameScene: SKScene {
                     HTP.isHidden = false
                 }
                 
-                else if node.name == "toti" {
+                else if node.name == "toti" && touchedNodes.count == 1 {
                     
                     loveStatus = self.defaults.integer(forKey: "love")
                     if loveStatus < 10 {
