@@ -74,11 +74,12 @@ public class GameScene: SKScene {
     var fishie: SKSpriteNode = SKSpriteNode(imageNamed: "fish_0")
     var HTP = HowToPlay()
     let defaults = UserDefaults.standard
-    var hungerStatus: Int = 5
-    var funStatus: Int = 5
-    var energyStatus: Int = 5
-    var loveStatus: Int = 5
+    var hungerStatus = UserDefaults.standard.integer(forKey: "hunger")
+    var funStatus = UserDefaults.standard.integer(forKey: "fun")
+    var energyStatus = UserDefaults.standard.integer(forKey: "energy")
+    var loveStatus = UserDefaults.standard.integer(forKey: "love")
     var greenStatus: Int = 0
+    let firstRun = UserDefaults.standard.bool(forKey: "firstRun") as Bool
     
 
     
@@ -130,14 +131,22 @@ public class GameScene: SKScene {
         fishie.setScale(0.06)
         
         print(hungerStatus)
-        defaults.set(hungerStatus, forKey: "hunger")
-        defaults.set(loveStatus, forKey: "love")
-        defaults.set(funStatus, forKey: "fun")
-        defaults.set(energyStatus, forKey: "energy")
+        
+        
+        // setting status for first run
+        if !firstRun {
+            defaults.set(5, forKey: "hunger")
+            defaults.set(5, forKey: "love")
+            defaults.set(5, forKey: "fun")
+            defaults.set(5, forKey: "energy")
+            
+            defaults.set(true, forKey: "firstRun")
+        }
         
       
         
     }
+    
     
     public override func didChangeSize(_ oldSize: CGSize) {
         
