@@ -79,7 +79,10 @@ public class GameScene: SKScene {
     var energyStatus = UserDefaults.standard.integer(forKey: "energy")
     var loveStatus = UserDefaults.standard.integer(forKey: "love")
     var greenStatus: Int = 0
-    let firstRun = UserDefaults.standard.bool(forKey: "firstRun") as Bool
+    let firstRun = UserDefaults.standard.bool(forKey: "firstRun") as Bool //starts on false
+  
+    var hungerDate = UserDefaults.standard.object(forKey: "hungerDate") as? Date ?? Date()
+    weak var timer: Timer?
     
 
     
@@ -130,21 +133,68 @@ public class GameScene: SKScene {
         litter.setScale(0.09)
         fishie.setScale(0.06)
         
-        print(hungerStatus)
         
         
-        // setting status for first run
+        //let ultimaComida = UserDefaults.standard.object(forKey: "ultimaComida") as! Date
+        
+        
         if !firstRun {
+            // setting status for first run
             defaults.set(5, forKey: "hunger")
             defaults.set(5, forKey: "love")
             defaults.set(5, forKey: "fun")
             defaults.set(5, forKey: "energy")
             
+            //gets the date
+            UserDefaults.standard.set(Date(), forKey: "hungerDate")
+            //print("first run")
+            //print(Date(timeIntervalSince1970: UserDefaults.standard.double(forKey: "hungerDate")))
+           // print(hungerDate!)
+            
+//            timer = Timer.scheduledTimer(withTimeInterval: 3600.0, repeats: false){ [weak self] timer in self?.diminuiComida()}
+//            UserDefaults.standard.set(Date(), forKey: "hungerDate")
+            
             defaults.set(true, forKey: "firstRun")
+            
         }
+//        else{
+//            let deltaTempo = DateInterval(start: ultimaComida, end: Date()).duration
+//                    // calcula quantas vezes ficou fora (por ex: 2 vezes em duas horas)
+//            let porcentagem = Int(floor(deltaTempo/3600))
+//                    // chama a funcao pra diminuir a barrinha (precisa fazer um if pra nao remover mais de 100%)
+//            updateComida(porcentagem: porcentagem)
+//                    // chama o timer com o tempo restante (por ex: 1h30 fora, chama o timer com 30 min)
+//            timer = Timer.scheduledTimer(withTimeInterval: deltaTempo % 3600, repeats: false){ [weak self] timer in self?.diminuiComida()}
+//
+//        }
         
       
         
+    }
+//    updateComida(porcentagem: Int) {
+//
+//    }
+    
+    
+    public override func update(_ currentTime: TimeInterval) {
+//        var currentDate = Date()
+//        var dateDiff = currentDate.timeIntervalSince(hungerDate)
+//        print(dateDiff)
+//        if dateDiff >= 10 {
+//            hungerDate = currentDate
+//            diminuiComida()
+//        }
+        
+        
+    }
+    
+    func diminuiComida(){
+        print("miau")
+        hungerStatus = self.defaults.integer(forKey: "hunger")
+        if hungerStatus > 0 {
+            defaults.set(hungerStatus - 1, forKey: "hunger")
+        }
+        updateBars()
     }
     
     
