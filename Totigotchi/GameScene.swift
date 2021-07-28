@@ -165,10 +165,12 @@ public class GameScene: SKScene {
     weak var timerEnergy: Timer?
     let hungerTime = UserDefaults.standard.double(forKey: "hungerTime")
     let funTime = UserDefaults.standard.double(forKey: "funTime")
-    let energyTime = UserDefaults.standard.double(forKey: "energyime")
+    let energyTime = UserDefaults.standard.double(forKey: "energyTime")
     let loveTime = UserDefaults.standard.double(forKey: "loveTime")
-    let hungTimeForDrop: Double = 5
+    let hungTimeForDrop: Double = 10
     let funTimeForDrop: Double = 10
+    let energyTimeForDrop: Double = 10
+    let loveTimeForDrop: Double = 10
     
     // MARK: ---- Setting Notifications ----
     public override func sceneDidLoad() {
@@ -199,27 +201,93 @@ public class GameScene: SKScene {
             // fun
             timerFun = Timer.scheduledTimer(withTimeInterval: funTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseFun()}
             defaults.set(Date(), forKey: "funDate")
-            defaults.set(hungTimeForDrop, forKey: "funTime")
+            defaults.set(funTimeForDrop, forKey: "funTime")
+            
+            // energy
+            timerEnergy = Timer.scheduledTimer(withTimeInterval: energyTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseEnergy()}
+            defaults.set(Date(), forKey: "energyDate")
+            defaults.set(energyTimeForDrop, forKey: "energyTime")
+            
+            // love
+            timerLove = Timer.scheduledTimer(withTimeInterval: loveTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseLove()}
+            defaults.set(Date(), forKey: "loveDate")
+            defaults.set(loveTimeForDrop, forKey: "loveTime")
     
         }
         else {
-            let hungerDate2 = self.defaults.object(forKey: "hungerDate") as! Date
-            let currentDate = Date()
-            var TimeDiff = currentDate.timeIntervalSince(hungerDate2)
-            var percentage = 0
-            if TimeDiff >= hungerTime {
-                percentage += 1
-                TimeDiff -= hungerTime
-            }
-            percentage += Int(floor(TimeDiff/hungTimeForDrop))
-            print(percentage)
-            print(TimeDiff)
-            updateHunger(percentage: percentage)
-            let interval = TimeDiff.truncatingRemainder(dividingBy: hungTimeForDrop)
-            defaults.set(Date(), forKey: "hungerDate")
-            timerHunger = Timer.scheduledTimer(withTimeInterval: interval, repeats: false){ [weak self] timer in self?.decreaseHunger()}
-            defaults.set(interval, forKey: "hungerTime")
+            calculateHung()
+            calculateFun()
+            calculateEnergy()
+            calculateLove()
         }
+    }
+    
+    func calculateHung(){
+        let hungerDate2 = self.defaults.object(forKey: "hungerDate") as! Date
+        let currentDate = Date()
+        var TimeDiff = currentDate.timeIntervalSince(hungerDate2)
+        var percentage = 0
+        if TimeDiff >= hungerTime {
+            percentage += 1
+            TimeDiff -= hungerTime
+        }
+        percentage += Int(floor(TimeDiff/hungTimeForDrop))
+        updateHunger(percentage: percentage)
+        let interval = TimeDiff.truncatingRemainder(dividingBy: hungTimeForDrop)
+        defaults.set(Date(), forKey: "hungerDate")
+        timerHunger = Timer.scheduledTimer(withTimeInterval: interval, repeats: false){ [weak self] timer in self?.decreaseHunger()}
+        defaults.set(interval, forKey: "hungerTime")
+    }
+    
+    func calculateFun(){
+        let funDate2 = self.defaults.object(forKey: "funDate") as! Date
+        let currentDate = Date()
+        var TimeDiff = currentDate.timeIntervalSince(funDate2)
+        var percentage = 0
+        if TimeDiff >= funTime {
+            percentage += 1
+            TimeDiff -= funTime
+        }
+        percentage += Int(floor(TimeDiff/funTimeForDrop))
+        updateFun(percentage: percentage)
+        let interval = TimeDiff.truncatingRemainder(dividingBy: funTimeForDrop)
+        defaults.set(Date(), forKey: "funDate")
+        timerFun = Timer.scheduledTimer(withTimeInterval: interval, repeats: false){ [weak self] timer in self?.decreaseFun()}
+        defaults.set(interval, forKey: "funTime")
+    }
+    
+    func calculateEnergy(){
+        let energyDate2 = self.defaults.object(forKey: "energyDate") as! Date
+        let currentDate = Date()
+        var TimeDiff = currentDate.timeIntervalSince(energyDate2)
+        var percentage = 0
+        if TimeDiff >= energyTime {
+            percentage += 1
+            TimeDiff -= energyTime
+        }
+        percentage += Int(floor(TimeDiff/energyTimeForDrop))
+        updateEnergy(percentage: percentage)
+        let interval = TimeDiff.truncatingRemainder(dividingBy: energyTimeForDrop)
+        defaults.set(Date(), forKey: "energyDate")
+        timerEnergy = Timer.scheduledTimer(withTimeInterval: interval, repeats: false){ [weak self] timer in self?.decreaseEnergy()}
+        defaults.set(interval, forKey: "energyTime")
+    }
+    
+    func calculateLove(){
+        let loveDate2 = self.defaults.object(forKey: "loveDate") as! Date
+        let currentDate = Date()
+        var TimeDiff = currentDate.timeIntervalSince(loveDate2)
+        var percentage = 0
+        if TimeDiff >= loveTime {
+            percentage += 1
+            TimeDiff -= loveTime
+        }
+        percentage += Int(floor(TimeDiff/loveTimeForDrop))
+        updateLove(percentage: percentage)
+        let interval = TimeDiff.truncatingRemainder(dividingBy: loveTimeForDrop)
+        defaults.set(Date(), forKey: "loveDate")
+        timerLove = Timer.scheduledTimer(withTimeInterval: interval, repeats: false){ [weak self] timer in self?.decreaseLove()}
+        defaults.set(interval, forKey: "loveTime")
     }
     
     // MARK: --- Decrease Functions ---
@@ -283,7 +351,6 @@ public class GameScene: SKScene {
     }
     
     func decreaseFun(){
-        print("miau")
         funStatus = self.defaults.integer(forKey: "fun")
         if funStatus > 0 {
             defaults.set(funStatus - 1, forKey: "fun")
@@ -291,11 +358,10 @@ public class GameScene: SKScene {
         updateBars()
         
         defaults.set(Date(), forKey: "funDate")
-        timerFun = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){ [weak self] timer in self?.decreaseFun()}
+        timerFun = Timer.scheduledTimer(withTimeInterval: funTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseFun()}
     }
     
     func decreaseEnergy(){
-        print("miau")
         energyStatus = self.defaults.integer(forKey: "energy")
         if energyStatus > 0 {
             defaults.set(energyStatus - 1, forKey: "energy")
@@ -303,11 +369,10 @@ public class GameScene: SKScene {
         updateBars()
         
         defaults.set(Date(), forKey: "energyDate")
-        timerEnergy = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){ [weak self] timer in self?.decreaseEnergy()}
+        timerEnergy = Timer.scheduledTimer(withTimeInterval: energyTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseEnergy()}
     }
     
     func decreaseLove(){
-        print("miau")
         loveStatus = self.defaults.integer(forKey: "love")
         if loveStatus > 0 {
             defaults.set(loveStatus - 1, forKey: "love")
@@ -315,7 +380,7 @@ public class GameScene: SKScene {
         updateBars()
         
         defaults.set(Date(), forKey: "loveDate")
-        timerLove = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){ [weak self] timer in self?.decreaseLove()}
+        timerLove = Timer.scheduledTimer(withTimeInterval: loveTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseLove()}
     }
  
     
