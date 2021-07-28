@@ -168,9 +168,9 @@ public class GameScene: SKScene {
     let energyTime = UserDefaults.standard.double(forKey: "energyTime")
     let loveTime = UserDefaults.standard.double(forKey: "loveTime")
     let hungTimeForDrop: Double = 10
-    let funTimeForDrop: Double = 10
-    let energyTimeForDrop: Double = 10
-    let loveTimeForDrop: Double = 10
+    let funTimeForDrop: Double = 13
+    let energyTimeForDrop: Double = 15
+    let loveTimeForDrop: Double = 7
     
     // MARK: ---- Setting Notifications ----
     public override func sceneDidLoad() {
@@ -183,6 +183,9 @@ public class GameScene: SKScene {
     // application enters bg
     @objc func applicationWillResignActive(notification: NSNotification) {
         timerHunger?.invalidate()
+        timerFun?.invalidate()
+        timerEnergy?.invalidate()
+        timerLove?.invalidate()
     }
     
     // application is active
