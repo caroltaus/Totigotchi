@@ -153,7 +153,7 @@ public class GameScene: SKScene {
     var energyStatus = UserDefaults.standard.integer(forKey: "energy")
     var loveStatus = UserDefaults.standard.integer(forKey: "love")
     var greenStatus: Int = 0
-    let firstRun = UserDefaults.standard.bool(forKey: "firstRun") as Bool //starts on false
+    var firstRun = UserDefaults.standard.bool(forKey: "firstRun") as Bool //starts on false
   
     var hungerDate = UserDefaults.standard.object(forKey: "hungerDate") as? Date ?? Date()
     weak var timer: Timer?
@@ -174,8 +174,26 @@ public class GameScene: SKScene {
     
     @objc func applicationWillEnterForeground(notification: NSNotification) {
         print(firstRun)
-        if firstRun {
-            var deltaTempo = DateInterval(start: hungerDate, end: Date()).duration
+        if !firstRun {
+            // setting status for first run
+            defaults.set(true, forKey: "firstRun")
+            firstRun = true
+            
+            
+            //gets the date
+            
+            timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){ [weak self] timer in self?.diminuiComida()}
+            defaults.set(Date(), forKey: "hungerDate")
+            defaults.set(10, forKey: "hungerTime")
+ 
+            
+            
+        }
+        else {
+            var hungerDate2 = self.defaults.object(forKey: "hungerDate") as! Date
+            let currentDate = Date()
+            var deltaTempo = currentDate.timeIntervalSince(hungerDate2)
+            //var deltaTempo = DateInterval(start: hungerDate, end: Date()).duration
             var porcentagem = 0
             if deltaTempo >= hungerTime {
                 porcentagem += 1
@@ -186,6 +204,7 @@ public class GameScene: SKScene {
             print(deltaTempo)
             updateComida(porcentagem: porcentagem)
             let interval = deltaTempo.truncatingRemainder(dividingBy: 10)
+            defaults.set(Date(), forKey: "hungerDate")
             timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false){ [weak self] timer in self?.diminuiComida()}
             defaults.set(interval, forKey: "hungerTime")
         }
@@ -240,24 +259,15 @@ public class GameScene: SKScene {
         litter.setScale(0.09)
         fishie.setScale(0.06)
         
-        
         if !firstRun {
             // setting status for first run
+            
             defaults.set(5, forKey: "hunger")
             defaults.set(5, forKey: "love")
             defaults.set(5, forKey: "fun")
             defaults.set(5, forKey: "energy")
-            
-            //gets the date
-            
-            timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){ [weak self] timer in self?.diminuiComida()}
-            UserDefaults.standard.set(Date(), forKey: "hungerDate")
-            defaults.set(10, forKey: "hungerTime")
- 
-            
-            defaults.set(true, forKey: "firstRun")
-            
         }
+        
         
         
 
@@ -270,7 +280,7 @@ public class GameScene: SKScene {
         if hungerStatus > 0 && porcentagem < hungerStatus {
             defaults.set(hungerStatus - porcentagem, forKey: "hunger")
         }
-        else if porcentagem == hungerStatus {
+        else if porcentagem >= hungerStatus {
             defaults.set(0, forKey: "hunger")
         }
         
@@ -289,7 +299,7 @@ public class GameScene: SKScene {
         }
         updateBars()
         
-        
+        defaults.set(Date(), forKey: "hungerDate")
         timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){ [weak self] timer in self?.diminuiComida()}
     }
     
