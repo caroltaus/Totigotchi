@@ -154,65 +154,172 @@ public class GameScene: SKScene {
     var loveStatus = UserDefaults.standard.integer(forKey: "love")
     var greenStatus: Int = 0
     var firstRun = UserDefaults.standard.bool(forKey: "firstRun") as Bool //starts on false
-  
-    var hungerDate = UserDefaults.standard.object(forKey: "hungerDate") as? Date ?? Date()
-    weak var timer: Timer?
     lazy var currentTexture: [SKTexture] = []
+    var hungerDate = UserDefaults.standard.object(forKey: "hungerDate") as? Date ?? Date()
+    var funDate = UserDefaults.standard.object(forKey: "funDate") as? Date ?? Date()
+    var energyDate = UserDefaults.standard.object(forKey: "energyDate") as? Date ?? Date()
+    var loveDate = UserDefaults.standard.object(forKey: "loveDate") as? Date ?? Date()
+    weak var timerHunger: Timer?
+    weak var timerFun: Timer?
+    weak var timerLove: Timer?
+    weak var timerEnergy: Timer?
     let hungerTime = UserDefaults.standard.double(forKey: "hungerTime")
+    let funTime = UserDefaults.standard.double(forKey: "funTime")
+    let energyTime = UserDefaults.standard.double(forKey: "energyime")
+    let loveTime = UserDefaults.standard.double(forKey: "loveTime")
+    let hungTimeForDrop: Double = 5
+    let funTimeForDrop: Double = 10
     
+    // MARK: ---- Setting Notifications ----
     public override func sceneDidLoad() {
         let app = UIApplication.shared
         NotificationCenter.default.addObserver(self, selector: #selector(GameScene.applicationWillEnterForeground(notification:)), name: UIApplication.willEnterForegroundNotification, object: app)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameScene.applicationWillResignActive(notification:)), name: UIApplication.willResignActiveNotification, object: app)
-        
-       
-    }
-    @objc func applicationWillResignActive(notification: NSNotification) {
-        timer?.invalidate()
     }
     
+    // application enters bg
+    @objc func applicationWillResignActive(notification: NSNotification) {
+        timerHunger?.invalidate()
+    }
+    
+    // application is active
     @objc func applicationWillEnterForeground(notification: NSNotification) {
-        print(firstRun)
+        
+        // setting status for first run
         if !firstRun {
-            // setting status for first run
             defaults.set(true, forKey: "firstRun")
             firstRun = true
             
-            
-            //gets the date
-            
-            timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){ [weak self] timer in self?.diminuiComida()}
+            // hunger
+            timerHunger = Timer.scheduledTimer(withTimeInterval: hungTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseHunger()}
             defaults.set(Date(), forKey: "hungerDate")
-            defaults.set(10, forKey: "hungerTime")
- 
+            defaults.set(hungTimeForDrop, forKey: "hungerTime")
             
-            
+            // fun
+            timerFun = Timer.scheduledTimer(withTimeInterval: funTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseFun()}
+            defaults.set(Date(), forKey: "funDate")
+            defaults.set(hungTimeForDrop, forKey: "funTime")
+    
         }
         else {
-            var hungerDate2 = self.defaults.object(forKey: "hungerDate") as! Date
+            let hungerDate2 = self.defaults.object(forKey: "hungerDate") as! Date
             let currentDate = Date()
-            var deltaTempo = currentDate.timeIntervalSince(hungerDate2)
-            //var deltaTempo = DateInterval(start: hungerDate, end: Date()).duration
-            var porcentagem = 0
-            if deltaTempo >= hungerTime {
-                porcentagem += 1
-                deltaTempo -= hungerTime
+            var TimeDiff = currentDate.timeIntervalSince(hungerDate2)
+            var percentage = 0
+            if TimeDiff >= hungerTime {
+                percentage += 1
+                TimeDiff -= hungerTime
             }
-            porcentagem += Int(floor(deltaTempo/10))
-            print(porcentagem)
-            print(deltaTempo)
-            updateComida(porcentagem: porcentagem)
-            let interval = deltaTempo.truncatingRemainder(dividingBy: 10)
+            percentage += Int(floor(TimeDiff/hungTimeForDrop))
+            print(percentage)
+            print(TimeDiff)
+            updateHunger(percentage: percentage)
+            let interval = TimeDiff.truncatingRemainder(dividingBy: hungTimeForDrop)
             defaults.set(Date(), forKey: "hungerDate")
-            timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false){ [weak self] timer in self?.diminuiComida()}
+            timerHunger = Timer.scheduledTimer(withTimeInterval: interval, repeats: false){ [weak self] timer in self?.decreaseHunger()}
             defaults.set(interval, forKey: "hungerTime")
         }
     }
     
+    // MARK: --- Decrease Functions ---
+    
+    // Compensates for when app in in background
+    func updateHunger(percentage: Int) {
+        hungerStatus = self.defaults.integer(forKey: "hunger")
+        if hungerStatus > 0 && percentage < hungerStatus {
+            defaults.set(hungerStatus - percentage, forKey: "hunger")
+        }
+        else if percentage >= hungerStatus {
+            defaults.set(0, forKey: "hunger")
+        }
+        updateBars()
+    }
+    
+    func updateFun(percentage: Int) {
+        funStatus = self.defaults.integer(forKey: "fun")
+        if funStatus > 0 && percentage < funStatus {
+            defaults.set(funStatus - percentage, forKey: "fun")
+        }
+        else if percentage >= funStatus {
+            defaults.set(0, forKey: "fun")
+        }
+        updateBars()
+    }
+    
+    func updateEnergy(percentage: Int) {
+        energyStatus = self.defaults.integer(forKey: "energy")
+        if energyStatus > 0 && percentage < energyStatus {
+            defaults.set(energyStatus - percentage, forKey: "energy")
+        }
+        else if percentage >= energyStatus {
+            defaults.set(0, forKey: "energy")
+        }
+        updateBars()
+    }
+    
+    func updateLove(percentage: Int) {
+        loveStatus = self.defaults.integer(forKey: "love")
+        if loveStatus > 0 && percentage < loveStatus {
+            defaults.set(loveStatus - percentage, forKey: "love")
+        }
+        else if percentage >= loveStatus {
+            defaults.set(0, forKey: "love")
+        }
+        updateBars()
+    }
+    
+    
+    // Runs when app is active in foreground
+    func decreaseHunger(){
+        hungerStatus = self.defaults.integer(forKey: "hunger")
+        if hungerStatus > 0 {
+            defaults.set(hungerStatus - 1, forKey: "hunger")
+        }
+        updateBars()
+        
+        defaults.set(Date(), forKey: "hungerDate")
+        timerHunger = Timer.scheduledTimer(withTimeInterval: hungTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseHunger()}
+    }
+    
+    func decreaseFun(){
+        print("miau")
+        funStatus = self.defaults.integer(forKey: "fun")
+        if funStatus > 0 {
+            defaults.set(funStatus - 1, forKey: "fun")
+        }
+        updateBars()
+        
+        defaults.set(Date(), forKey: "funDate")
+        timerFun = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){ [weak self] timer in self?.decreaseFun()}
+    }
+    
+    func decreaseEnergy(){
+        print("miau")
+        energyStatus = self.defaults.integer(forKey: "energy")
+        if energyStatus > 0 {
+            defaults.set(energyStatus - 1, forKey: "energy")
+        }
+        updateBars()
+        
+        defaults.set(Date(), forKey: "energyDate")
+        timerEnergy = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){ [weak self] timer in self?.decreaseEnergy()}
+    }
+    
+    func decreaseLove(){
+        print("miau")
+        loveStatus = self.defaults.integer(forKey: "love")
+        if loveStatus > 0 {
+            defaults.set(loveStatus - 1, forKey: "love")
+        }
+        updateBars()
+        
+        defaults.set(Date(), forKey: "loveDate")
+        timerLove = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){ [weak self] timer in self?.decreaseLove()}
+    }
  
     
-    
+    // MARK: --- Did Move ---
     public override func didMove(to view: SKView) {
         super.didMove(to: view)
         backgroundColor = #colorLiteral(red: 0.9227683544, green: 0.9586974978, blue: 0.9140693545, alpha: 1)
@@ -260,52 +367,16 @@ public class GameScene: SKScene {
         fishie.setScale(0.06)
         
         if !firstRun {
-            // setting status for first run
-            
+            // setting status bars for first run
             defaults.set(5, forKey: "hunger")
             defaults.set(5, forKey: "love")
             defaults.set(5, forKey: "fun")
             defaults.set(5, forKey: "energy")
         }
-        
-        
-        
-
-    }
-    
-    // roda para compensar tempo do app fechado
-    func updateComida(porcentagem: Int) {
-        hungerStatus = self.defaults.integer(forKey: "hunger")
-        
-        if hungerStatus > 0 && porcentagem < hungerStatus {
-            defaults.set(hungerStatus - porcentagem, forKey: "hunger")
-        }
-        else if porcentagem >= hungerStatus {
-            defaults.set(0, forKey: "hunger")
-        }
-        
-        updateBars()
-
     }
     
     
-    
-    // roda enquanto app aberto
-    func diminuiComida(){
-        print("miau")
-        hungerStatus = self.defaults.integer(forKey: "hunger")
-        if hungerStatus > 0 {
-            defaults.set(hungerStatus - 1, forKey: "hunger")
-        }
-        updateBars()
-        
-        defaults.set(Date(), forKey: "hungerDate")
-        timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){ [weak self] timer in self?.diminuiComida()}
-    }
-    
-  
-    
-    
+    // MARK: --- Did Change Size ---
     public override func didChangeSize(_ oldSize: CGSize) {
         
         // --- setting positions ---
@@ -351,7 +422,9 @@ public class GameScene: SKScene {
         
     }
     
-    public func statusColors() -> Int{
+    // MARK: --- Status Colors ---
+    // counts the number of green bars to decide the correct idle animation
+    public func statusColors() -> Int {
         greenStatus = 0
         hungerStatus = self.defaults.integer(forKey: "hunger")
         funStatus = self.defaults.integer(forKey: "fun")
@@ -377,14 +450,16 @@ public class GameScene: SKScene {
         }
         
         return greenStatus
-
     }
 
+    // MARK: --- Idle Animation ---
     public func idleAnimation(){
+        
         fishie.isHidden = true
         
         greenStatus = statusColors()
         
+        // Happy Idle
         if greenStatus >= 3 {
             currentTexture = texHappy
             for t in currentTexture {
@@ -398,6 +473,7 @@ public class GameScene: SKScene {
             toti.run(happyLoop)
         }
         
+        // Sad Idle
         else if greenStatus == 2 {
             
             currentTexture = texSad
@@ -414,8 +490,8 @@ public class GameScene: SKScene {
             
         }
         
+        // ANgry Idle
         else {
-            
             currentTexture = texAngry
             for t in currentTexture {
                 t.filteringMode = .nearest
@@ -427,11 +503,11 @@ public class GameScene: SKScene {
             toti.removeAllActions()
             toti.run(angryLoop)
         }
-        
-            
+               
     }
     
-    
+    // MARK: --- UpdateBars ---
+    // updates the texture of the status bars
     public func updateBars() {
         let hungerPerc = self.defaults.integer(forKey: "hunger") * 10
         let hungerBarTexture: SKTexture = SKTexture(imageNamed: "hungerBar\(hungerPerc)")
@@ -449,7 +525,8 @@ public class GameScene: SKScene {
         let energyBarTexture: SKTexture = SKTexture(imageNamed: "energyBar\(energyPerc)")
         energyBar.texture = energyBarTexture
     }
-        
+    
+    // MARK: --- TouchesBegan ---
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let scene = self
         if let touch = touches.first {
@@ -458,10 +535,6 @@ public class GameScene: SKScene {
             for node in touchedNodes.reversed() {
                 if node.name == "question" {
                     butQuest.texture = SKTexture(imageNamed: "butQuest_pressed")
-                }
-                
-                else if node.name == "litter" {
-            
                 }
                 else if node.name == "food" {
                     foodButton.texture = SKTexture(imageNamed: "butFood_pressed")
@@ -479,7 +552,7 @@ public class GameScene: SKScene {
         }
     }
     
-    
+    // MARK: --- TouchesEnded ---
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let scene = self
         if let touch = touches.first {
@@ -493,7 +566,6 @@ public class GameScene: SKScene {
                 }
                 
                 else if node.name == "toti" && touchedNodes.count == 1 {
-                    
                     loveStatus = self.defaults.integer(forKey: "love")
                     if loveStatus < 10 {
                         defaults.set(loveStatus + 1, forKey: "love")
@@ -576,9 +648,8 @@ public class GameScene: SKScene {
                     })
                     
                     updateBars()
-                    
-                    
                 }
+                
                 else if node.name == "sleep" {
                     sleepButton.texture = SKTexture(imageNamed: "butSleep_normal")
                     
@@ -603,6 +674,7 @@ public class GameScene: SKScene {
                     
                     updateBars()
                 }
+                
                 else if node.name == "med" {
                     medButton.texture = SKTexture(imageNamed: "butMed_normal")
                     
@@ -619,10 +691,8 @@ public class GameScene: SKScene {
                     toti.run(medLoop, completion: {
                         self.idleAnimation()
                     })
-
-                    
-                    
                 }
+                
                 else if node.name == "litter" {
                     print("caixinha")
                 }
