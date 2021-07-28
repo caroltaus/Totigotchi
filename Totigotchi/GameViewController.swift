@@ -16,14 +16,16 @@ class GameViewController: UIViewController {
         }
     
     override func viewDidLoad() {
+
         super.viewDidLoad()
         let view = SKView()
         scene.scaleMode = .resizeFill
         view.presentScene(scene)
         self.view = view
+
         //view.showsNodeCount = true
     }
-
+    
 
 }
 

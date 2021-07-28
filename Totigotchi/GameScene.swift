@@ -8,6 +8,7 @@
 import Foundation
 import SpriteKit
 
+
 public class GameScene: SKScene {
     
     var buttonsBar: SKShapeNode = SKShapeNode(rectOf: CGSize(width: 800, height: 200))
@@ -157,8 +158,40 @@ public class GameScene: SKScene {
     var hungerDate = UserDefaults.standard.object(forKey: "hungerDate") as? Date ?? Date()
     weak var timer: Timer?
     lazy var currentTexture: [SKTexture] = []
+    let hungerTime = UserDefaults.standard.double(forKey: "hungerTime")
     
-
+    public override func sceneDidLoad() {
+        let app = UIApplication.shared
+        NotificationCenter.default.addObserver(self, selector: #selector(GameScene.applicationWillEnterForeground(notification:)), name: UIApplication.willEnterForegroundNotification, object: app)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(GameScene.applicationWillResignActive(notification:)), name: UIApplication.willResignActiveNotification, object: app)
+        
+       
+    }
+    @objc func applicationWillResignActive(notification: NSNotification) {
+        timer?.invalidate()
+    }
+    
+    @objc func applicationWillEnterForeground(notification: NSNotification) {
+        print(firstRun)
+        if firstRun {
+            var deltaTempo = DateInterval(start: hungerDate, end: Date()).duration
+            var porcentagem = 0
+            if deltaTempo >= hungerTime {
+                porcentagem += 1
+                deltaTempo -= hungerTime
+            }
+            porcentagem += Int(floor(deltaTempo/10))
+            print(porcentagem)
+            print(deltaTempo)
+            updateComida(porcentagem: porcentagem)
+            let interval = deltaTempo.truncatingRemainder(dividingBy: 10)
+            timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false){ [weak self] timer in self?.diminuiComida()}
+            defaults.set(interval, forKey: "hungerTime")
+        }
+    }
+    
+ 
     
     
     public override func didMove(to view: SKView) {
@@ -208,10 +241,6 @@ public class GameScene: SKScene {
         fishie.setScale(0.06)
         
         
-        
-        //let ultimaComida = UserDefaults.standard.object(forKey: "ultimaComida") as! Date
-        
-        
         if !firstRun {
             // setting status for first run
             defaults.set(5, forKey: "hunger")
@@ -220,48 +249,38 @@ public class GameScene: SKScene {
             defaults.set(5, forKey: "energy")
             
             //gets the date
-            UserDefaults.standard.set(Date(), forKey: "hungerDate")
-            //print("first run")
-            //print(Date(timeIntervalSince1970: UserDefaults.standard.double(forKey: "hungerDate")))
-           // print(hungerDate!)
             
-//            timer = Timer.scheduledTimer(withTimeInterval: 3600.0, repeats: false){ [weak self] timer in self?.diminuiComida()}
-//            UserDefaults.standard.set(Date(), forKey: "hungerDate")
+            timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){ [weak self] timer in self?.diminuiComida()}
+            UserDefaults.standard.set(Date(), forKey: "hungerDate")
+            defaults.set(10, forKey: "hungerTime")
+ 
             
             defaults.set(true, forKey: "firstRun")
             
         }
-//        else{
-//            let deltaTempo = DateInterval(start: ultimaComida, end: Date()).duration
-//                    // calcula quantas vezes ficou fora (por ex: 2 vezes em duas horas)
-//            let porcentagem = Int(floor(deltaTempo/3600))
-//                    // chama a funcao pra diminuir a barrinha (precisa fazer um if pra nao remover mais de 100%)
-//            updateComida(porcentagem: porcentagem)
-//                    // chama o timer com o tempo restante (por ex: 1h30 fora, chama o timer com 30 min)
-//            timer = Timer.scheduledTimer(withTimeInterval: deltaTempo % 3600, repeats: false){ [weak self] timer in self?.diminuiComida()}
-//
-//        }
         
-      
         
+
     }
-//    updateComida(porcentagem: Int) {
-//
-//    }
+    
+    // roda para compensar tempo do app fechado
+    func updateComida(porcentagem: Int) {
+        hungerStatus = self.defaults.integer(forKey: "hunger")
+        
+        if hungerStatus > 0 && porcentagem < hungerStatus {
+            defaults.set(hungerStatus - porcentagem, forKey: "hunger")
+        }
+        else if porcentagem == hungerStatus {
+            defaults.set(0, forKey: "hunger")
+        }
+        
+        updateBars()
+
+    }
     
     
-//    public override func update(_ currentTime: TimeInterval) {
-//        var currentDate = Date()
-//        var dateDiff = currentDate.timeIntervalSince(hungerDate)
-//        print(dateDiff)
-//        if dateDiff >= 10 {
-//            hungerDate = currentDate
-//            diminuiComida()
-//        }
-//        
-//        
-//    }
     
+    // roda enquanto app aberto
     func diminuiComida(){
         print("miau")
         hungerStatus = self.defaults.integer(forKey: "hunger")
@@ -269,7 +288,12 @@ public class GameScene: SKScene {
             defaults.set(hungerStatus - 1, forKey: "hunger")
         }
         updateBars()
+        
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){ [weak self] timer in self?.diminuiComida()}
     }
+    
+  
     
     
     public override func didChangeSize(_ oldSize: CGSize) {
