@@ -222,6 +222,7 @@ public class GameScene: SKScene {
             calculateFun()
             calculateEnergy()
             calculateLove()
+            
         }
     }
     
@@ -304,6 +305,7 @@ public class GameScene: SKScene {
         else if percentage >= hungerStatus {
             defaults.set(0, forKey: "hunger")
         }
+        idleAnimation()
         updateBars()
     }
     
@@ -315,6 +317,7 @@ public class GameScene: SKScene {
         else if percentage >= funStatus {
             defaults.set(0, forKey: "fun")
         }
+        idleAnimation()
         updateBars()
     }
     
@@ -326,6 +329,7 @@ public class GameScene: SKScene {
         else if percentage >= energyStatus {
             defaults.set(0, forKey: "energy")
         }
+        idleAnimation()
         updateBars()
     }
     
@@ -337,6 +341,7 @@ public class GameScene: SKScene {
         else if percentage >= loveStatus {
             defaults.set(0, forKey: "love")
         }
+        idleAnimation()
         updateBars()
     }
     
@@ -346,6 +351,7 @@ public class GameScene: SKScene {
         hungerStatus = self.defaults.integer(forKey: "hunger")
         if hungerStatus > 0 {
             defaults.set(hungerStatus - 1, forKey: "hunger")
+            idleAnimation()
         }
         updateBars()
         
@@ -357,6 +363,7 @@ public class GameScene: SKScene {
         funStatus = self.defaults.integer(forKey: "fun")
         if funStatus > 0 {
             defaults.set(funStatus - 1, forKey: "fun")
+            idleAnimation()
         }
         updateBars()
         
@@ -368,6 +375,7 @@ public class GameScene: SKScene {
         energyStatus = self.defaults.integer(forKey: "energy")
         if energyStatus > 0 {
             defaults.set(energyStatus - 1, forKey: "energy")
+            idleAnimation()
         }
         updateBars()
         
@@ -378,8 +386,10 @@ public class GameScene: SKScene {
     func decreaseLove(){
         loveStatus = self.defaults.integer(forKey: "love")
         if loveStatus > 0 {
+            idleAnimation()
             defaults.set(loveStatus - 1, forKey: "love")
         }
+        
         updateBars()
         
         defaults.set(Date(), forKey: "loveDate")
@@ -592,6 +602,7 @@ public class GameScene: SKScene {
         let energyPerc = self.defaults.integer(forKey: "energy") * 10
         let energyBarTexture: SKTexture = SKTexture(imageNamed: "energyBar\(energyPerc)")
         energyBar.texture = energyBarTexture
+        
     }
     
     // MARK: --- TouchesBegan ---
