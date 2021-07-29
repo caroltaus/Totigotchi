@@ -45,7 +45,7 @@ class HowToPlay: SKNode {
         HTPTitle.position = CGPoint(x: 0, y: 270)
         
         HTPText.fontColor = .black
-        HTPText.text = "To take care of your Toti pay attention to his needs. The status bars on top, if he is sick, and if his litter box is clean. You can attend to them by tapping on Toti, on the buttons at the bottom of the screen and on his litter box. \n\nBy taking good care of him he will be happy and healthy, and love you forever."
+        HTPText.text = "To take care of your Toti pay attention to his needs: The status bars on top, if he is sick, and if his litter box is clean. You can attend to them by tapping on Toti, on the buttons at the bottom of the screen and on his litter box. \n\nBy taking good care of him he will be happy and healthy, and love you forever."
         HTPText.numberOfLines = 0
         HTPText.preferredMaxLayoutWidth = 290
         HTPText.fontSize = 16
