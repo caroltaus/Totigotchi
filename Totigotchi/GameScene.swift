@@ -195,26 +195,7 @@ public class GameScene: SKScene {
         if !firstRun {
             defaults.set(true, forKey: "firstRun")
             firstRun = true
-            
-            // hunger
-            timerHunger = Timer.scheduledTimer(withTimeInterval: hungTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseHunger()}
-            defaults.set(Date(), forKey: "hungerDate")
-            defaults.set(hungTimeForDrop, forKey: "hungerTime")
-            
-            // fun
-            timerFun = Timer.scheduledTimer(withTimeInterval: funTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseFun()}
-            defaults.set(Date(), forKey: "funDate")
-            defaults.set(funTimeForDrop, forKey: "funTime")
-            
-            // energy
-            timerEnergy = Timer.scheduledTimer(withTimeInterval: energyTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseEnergy()}
-            defaults.set(Date(), forKey: "energyDate")
-            defaults.set(energyTimeForDrop, forKey: "energyTime")
-            
-            // love
-            timerLove = Timer.scheduledTimer(withTimeInterval: loveTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseLove()}
-            defaults.set(Date(), forKey: "loveDate")
-            defaults.set(loveTimeForDrop, forKey: "loveTime")
+    
     
         }
         else {
@@ -450,6 +431,26 @@ public class GameScene: SKScene {
             defaults.set(5, forKey: "love")
             defaults.set(5, forKey: "fun")
             defaults.set(5, forKey: "energy")
+            
+            // hunger
+            timerHunger = Timer.scheduledTimer(withTimeInterval: hungTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseHunger()}
+            defaults.set(Date(), forKey: "hungerDate")
+            defaults.set(hungTimeForDrop, forKey: "hungerTime")
+            
+            // fun
+            timerFun = Timer.scheduledTimer(withTimeInterval: funTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseFun()}
+            defaults.set(Date(), forKey: "funDate")
+            defaults.set(funTimeForDrop, forKey: "funTime")
+            
+            // energy
+            timerEnergy = Timer.scheduledTimer(withTimeInterval: energyTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseEnergy()}
+            defaults.set(Date(), forKey: "energyDate")
+            defaults.set(energyTimeForDrop, forKey: "energyTime")
+            
+            // love
+            timerLove = Timer.scheduledTimer(withTimeInterval: loveTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseLove()}
+            defaults.set(Date(), forKey: "loveDate")
+            defaults.set(loveTimeForDrop, forKey: "loveTime")
         }
     }
     
