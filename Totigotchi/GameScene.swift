@@ -171,6 +171,10 @@ public class GameScene: SKScene {
     let funTimeForDrop: Double = 13
     let energyTimeForDrop: Double = 15
     let loveTimeForDrop: Double = 7
+    var dirtyLitter = UserDefaults.standard.bool(forKey: "litter") as Bool
+    
+    
+    
     
     // MARK: ---- Setting Notifications ----
     public override func sceneDidLoad() {
@@ -186,6 +190,7 @@ public class GameScene: SKScene {
         timerFun?.invalidate()
         timerEnergy?.invalidate()
         timerLove?.invalidate()
+        
     }
     
     // application is active
@@ -195,14 +200,21 @@ public class GameScene: SKScene {
         if !firstRun {
             defaults.set(true, forKey: "firstRun")
             firstRun = true
-    
-    
         }
+        
         else {
             calculateHung()
             calculateFun()
             calculateEnergy()
             calculateLove()
+            if !dirtyLitter {
+                let boolLitter = isDirty()
+                defaults.set(boolLitter, forKey: "litter")
+                dirtyLitter = boolLitter
+            }
+            
+            litterIdle()
+            
             
         }
     }
@@ -451,6 +463,7 @@ public class GameScene: SKScene {
             timerLove = Timer.scheduledTimer(withTimeInterval: loveTimeForDrop, repeats: false){ [weak self] timer in self?.decreaseLove()}
             defaults.set(Date(), forKey: "loveDate")
             defaults.set(loveTimeForDrop, forKey: "loveTime")
+            
         }
     }
     
@@ -496,6 +509,7 @@ public class GameScene: SKScene {
         
         idleAnimation()
         updateBars()
+        litterIdle()
         
         
         
@@ -774,9 +788,45 @@ public class GameScene: SKScene {
                 }
                 
                 else if node.name == "litter" {
-                    print("caixinha")
+                    defaults.set(false, forKey: "litter")
+                    litterIdle()
+                    
                 }
             }
+        }
+    }
+    
+    func isDirty() -> Bool {
+        let prob = Int.random(in: 0..<10)
+        print(prob)
+        if prob == 1 {
+            return true
+        }
+        return false
+    }
+    
+    func litterIdle() {
+        litter.removeAllActions()
+        dirtyLitter = self.defaults.bool(forKey: "litter")
+        if dirtyLitter == false {
+            litter.texture = SKTexture(imageNamed: "litter_clean")
+        }
+        else {
+            
+            let litterTex = [SKTexture(imageNamed: "litter_dirty1"),
+                         SKTexture(imageNamed: "litter_dirty2")
+            ]
+            
+            for t in litterTex {
+                t.filteringMode = .nearest
+            }
+            
+            let smell = SKAction.animate(with: litterTex, timePerFrame: 0.5)
+            
+            let smellLoop = SKAction.repeatForever(smell)
+           
+            litter.run(smellLoop)
+            
         }
     }
     
