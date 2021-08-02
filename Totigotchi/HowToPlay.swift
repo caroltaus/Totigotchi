@@ -61,7 +61,7 @@ class HowToPlay: SKNode {
         AbtText.numberOfLines = 0
         AbtText.preferredMaxLayoutWidth = 295
         AbtText.fontSize = 22.5
-        AbtText.position = CGPoint(x: 0, y: -275)  
+        AbtText.position = CGPoint(x: 0, y: -275)
     }
     
     required init?(coder aDecoder: NSCoder) {
