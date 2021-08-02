@@ -140,6 +140,23 @@ public class GameScene: SKScene {
         SKTexture(imageNamed: "med_5")
         
     ]}
+    var texMedAng: [SKTexture] { [
+        SKTexture(imageNamed: "medAng_0"),
+        SKTexture(imageNamed: "medAng_0"),
+        SKTexture(imageNamed: "medAng_0"),
+        SKTexture(imageNamed: "medAng_0"),
+        SKTexture(imageNamed: "medAng_0"),
+        SKTexture(imageNamed: "medAng_1"),
+        SKTexture(imageNamed: "medAng_2"),
+        SKTexture(imageNamed: "medAng_3"),
+        SKTexture(imageNamed: "medAng_4"),
+        SKTexture(imageNamed: "medAng_5"),
+        SKTexture(imageNamed: "medAng_6"),
+        SKTexture(imageNamed: "medAng_7"),
+        SKTexture(imageNamed: "medAng_8"),
+        SKTexture(imageNamed: "medAng_0"),
+        SKTexture(imageNamed: "medAng_0")
+    ]}
     var texSick: [SKTexture] { [
         SKTexture(imageNamed: "sick_00"),
         SKTexture(imageNamed: "sick_01"),
@@ -199,10 +216,10 @@ public class GameScene: SKScene {
     let funTime = UserDefaults.standard.double(forKey: "funTime")
     let energyTime = UserDefaults.standard.double(forKey: "energyTime")
     let loveTime = UserDefaults.standard.double(forKey: "loveTime")
-    let hungTimeForDrop: Double = 10
-    let funTimeForDrop: Double = 13
-    let energyTimeForDrop: Double = 15
-    let loveTimeForDrop: Double = 7
+    let hungTimeForDrop: Double = 40
+    let funTimeForDrop: Double = 40
+    let energyTimeForDrop: Double = 40
+    let loveTimeForDrop: Double = 40
     var dirtyLitter = UserDefaults.standard.bool(forKey: "litter") as Bool
     var sick = UserDefaults.standard.bool(forKey: "sick") as Bool
     
@@ -609,6 +626,19 @@ public class GameScene: SKScene {
             toti.run(sickLoop)
                
         }
+        // Angry Idle
+        else if greenStatus < 2 || dirtyLitter {
+            currentTexture = texAngry
+            for t in currentTexture {
+                t.filteringMode = .nearest
+            }
+            
+            let angryIdle = SKAction.animate(with: currentTexture, timePerFrame: 0.1)
+            
+            let angryLoop = SKAction.repeatForever(angryIdle)
+            toti.removeAllActions()
+            toti.run(angryLoop)
+        }
         
         // Happy Idle
         else if greenStatus >= 3 {
@@ -625,7 +655,7 @@ public class GameScene: SKScene {
         }
         
         // Sad Idle
-        else if greenStatus == 2 {
+        else {
             
             currentTexture = texSad
             
@@ -641,19 +671,7 @@ public class GameScene: SKScene {
             
         }
         
-        // Angry Idle
-        else {
-            currentTexture = texAngry
-            for t in currentTexture {
-                t.filteringMode = .nearest
-            }
-            
-            let angryIdle = SKAction.animate(with: currentTexture, timePerFrame: 0.1)
-            
-            let angryLoop = SKAction.repeatForever(angryIdle)
-            toti.removeAllActions()
-            toti.run(angryLoop)
-        }
+        
                
     }
     
@@ -718,6 +736,7 @@ public class GameScene: SKScene {
                 }
                 
                 else if node.name == "toti" && touchedNodes.count == 1 {
+                    fishie.isHidden = true
                     loveStatus = self.defaults.integer(forKey: "love")
                     if loveStatus < 10 {
                         defaults.set(loveStatus + 1, forKey: "love")
@@ -778,6 +797,7 @@ public class GameScene: SKScene {
                 }
                 
                 else if node.name == "fun" {
+                    fishie.isHidden = true
                     funButton.texture = SKTexture(imageNamed: "butFun_normal")
                     
                     funStatus = self.defaults.integer(forKey: "fun")
@@ -803,6 +823,7 @@ public class GameScene: SKScene {
                 }
                 
                 else if node.name == "sleep" {
+                    fishie.isHidden = true
                     sleepButton.texture = SKTexture(imageNamed: "butSleep_normal")
                     
                     energyStatus = self.defaults.integer(forKey: "energy")
@@ -828,23 +849,40 @@ public class GameScene: SKScene {
                 }
                 
                 else if node.name == "med" {
-                    defaults.set(false, forKey: "sick")
-                    sick = false
+                    fishie.isHidden = true
                     medButton.texture = SKTexture(imageNamed: "butMed_normal")
                     
-                    
-                    currentTexture = texMed
-                    for t in currentTexture {
-                        t.filteringMode = .nearest
+                    if sick {
+                        defaults.set(false, forKey: "sick")
+                        sick = false
+                        currentTexture = texMed
+                        for t in currentTexture {
+                            t.filteringMode = .nearest
+                        }
+                        
+                        let medic = SKAction.animate(with: currentTexture, timePerFrame: 0.3)
+                        
+                        let medLoop = SKAction.repeat(medic, count: 1)
+                        toti.removeAllActions()
+                        toti.run(medLoop, completion: {
+                            self.idleAnimation()
+                        })
                     }
                     
-                    let medic = SKAction.animate(with: currentTexture, timePerFrame: 0.3)
-                    
-                    let medLoop = SKAction.repeat(medic, count: 1)
-                    toti.removeAllActions()
-                    toti.run(medLoop, completion: {
-                        self.idleAnimation()
-                    })
+                    else {
+                        currentTexture = texMedAng
+                        for t in currentTexture {
+                            t.filteringMode = .nearest
+                        }
+                        
+                        let medAngryIdle = SKAction.animate(with: currentTexture, timePerFrame: 0.1)
+                        
+                        let medAngryLoop = SKAction.repeat(medAngryIdle, count: 1)
+                        toti.removeAllActions()
+                        toti.run(medAngryLoop, completion: {
+                            self.idleAnimation()
+                        })
+                    }
                 }
                 
                 else if node.name == "litter" {
@@ -857,7 +895,7 @@ public class GameScene: SKScene {
     }
     
     func isDirty() -> Bool {
-        let prob = Int.random(in: 0..<10)
+        let prob = Int.random(in: 0..<2)
         if prob == 1 {
             return true
         }
@@ -890,7 +928,7 @@ public class GameScene: SKScene {
     }
     
     func isSick() -> Bool {
-        let prob = Int.random(in: 0..<20)
+        let prob = Int.random(in: 0..<2)
         print(prob)
         if prob == 1 {
             return true
