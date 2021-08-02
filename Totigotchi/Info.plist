@@ -22,7 +22,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>kongtext.ttf</string>
+		<string>munro.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
