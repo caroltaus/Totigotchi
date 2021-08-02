@@ -9,21 +9,29 @@
 /* Begin PBXBuildFile section */
 		C860489226A5E09A00574FBB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860489126A5E09A00574FBB /* AppDelegate.swift */; };
 		C860489426A5E09A00574FBB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860489326A5E09A00574FBB /* SceneDelegate.swift */; };
-		C860489626A5E09A00574FBB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860489526A5E09A00574FBB /* ViewController.swift */; };
+		C860489626A5E09A00574FBB /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860489526A5E09A00574FBB /* GameViewController.swift */; };
 		C860489926A5E09A00574FBB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C860489726A5E09A00574FBB /* Main.storyboard */; };
 		C860489B26A5E09C00574FBB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C860489A26A5E09C00574FBB /* Assets.xcassets */; };
 		C860489E26A5E09C00574FBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C860489C26A5E09C00574FBB /* LaunchScreen.storyboard */; };
+		C86048A626A5EB8F00574FBB /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86048A526A5EB8F00574FBB /* GameScene.swift */; };
+		C86048A926A9FEC800574FBB /* ScreenSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86048A826A9FEC800574FBB /* ScreenSize.swift */; };
+		C86048AB26AA084300574FBB /* HowToPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86048AA26AA084300574FBB /* HowToPlay.swift */; };
+		C86048BC26B8A59900574FBB /* munro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C86048BB26B8A59900574FBB /* munro.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C860488E26A5E09A00574FBB /* Totigotchi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Totigotchi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C860489126A5E09A00574FBB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C860489326A5E09A00574FBB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C860489526A5E09A00574FBB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C860489526A5E09A00574FBB /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		C860489826A5E09A00574FBB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C860489A26A5E09C00574FBB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C860489D26A5E09C00574FBB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C860489F26A5E09C00574FBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C86048A526A5EB8F00574FBB /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		C86048A826A9FEC800574FBB /* ScreenSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenSize.swift; sourceTree = "<group>"; };
+		C86048AA26AA084300574FBB /* HowToPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToPlay.swift; sourceTree = "<group>"; };
+		C86048BB26B8A59900574FBB /* munro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = munro.ttf; path = ../../../../Downloads/munro/munro.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +64,27 @@
 		C860489026A5E09A00574FBB /* Totigotchi */ = {
 			isa = PBXGroup;
 			children = (
+				C86048AC26AA2EF400574FBB /* Font */,
 				C860489126A5E09A00574FBB /* AppDelegate.swift */,
 				C860489326A5E09A00574FBB /* SceneDelegate.swift */,
-				C860489526A5E09A00574FBB /* ViewController.swift */,
+				C860489526A5E09A00574FBB /* GameViewController.swift */,
+				C86048A526A5EB8F00574FBB /* GameScene.swift */,
 				C860489726A5E09A00574FBB /* Main.storyboard */,
 				C860489A26A5E09C00574FBB /* Assets.xcassets */,
 				C860489C26A5E09C00574FBB /* LaunchScreen.storyboard */,
 				C860489F26A5E09C00574FBB /* Info.plist */,
+				C86048A826A9FEC800574FBB /* ScreenSize.swift */,
+				C86048AA26AA084300574FBB /* HowToPlay.swift */,
 			);
 			path = Totigotchi;
+			sourceTree = "<group>";
+		};
+		C86048AC26AA2EF400574FBB /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				C86048BB26B8A59900574FBB /* munro.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C860489E26A5E09C00574FBB /* LaunchScreen.storyboard in Resources */,
+				C86048BC26B8A59900574FBB /* munro.ttf in Resources */,
 				C860489B26A5E09C00574FBB /* Assets.xcassets in Resources */,
 				C860489926A5E09A00574FBB /* Main.storyboard in Resources */,
 			);
@@ -137,8 +158,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C860489626A5E09A00574FBB /* ViewController.swift in Sources */,
+				C86048A926A9FEC800574FBB /* ScreenSize.swift in Sources */,
+				C86048AB26AA084300574FBB /* HowToPlay.swift in Sources */,
+				C860489626A5E09A00574FBB /* GameViewController.swift in Sources */,
 				C860489226A5E09A00574FBB /* AppDelegate.swift in Sources */,
+				C86048A626A5EB8F00574FBB /* GameScene.swift in Sources */,
 				C860489426A5E09A00574FBB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,6 +311,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 87UTUM347S;
 				INFOPLIST_FILE = Totigotchi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -296,7 +321,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = taus.Totigotchi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -306,6 +331,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 87UTUM347S;
 				INFOPLIST_FILE = Totigotchi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -315,7 +341,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = taus.Totigotchi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
