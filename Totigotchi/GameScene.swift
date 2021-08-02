@@ -613,7 +613,6 @@ public class GameScene: SKScene {
         
         // Sick Idle
         if sick {
-            print("to dodoi")
             currentTexture = texSick
             
             for t in currentTexture {
@@ -929,7 +928,6 @@ public class GameScene: SKScene {
     
     func isSick() -> Bool {
         let prob = Int.random(in: 0..<2)
-        print(prob)
         if prob == 1 {
             return true
         }
