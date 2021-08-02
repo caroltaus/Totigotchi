@@ -216,10 +216,10 @@ public class GameScene: SKScene {
     let funTime = UserDefaults.standard.double(forKey: "funTime")
     let energyTime = UserDefaults.standard.double(forKey: "energyTime")
     let loveTime = UserDefaults.standard.double(forKey: "loveTime")
-    let hungTimeForDrop: Double = 40
-    let funTimeForDrop: Double = 40
-    let energyTimeForDrop: Double = 40
-    let loveTimeForDrop: Double = 40
+    let hungTimeForDrop: Double = 3600
+    let funTimeForDrop: Double = 7200
+    let energyTimeForDrop: Double = 1800
+    let loveTimeForDrop: Double = 2400
     var dirtyLitter = UserDefaults.standard.bool(forKey: "litter") as Bool
     var sick = UserDefaults.standard.bool(forKey: "sick") as Bool
     
@@ -887,6 +887,7 @@ public class GameScene: SKScene {
                 else if node.name == "litter" {
                     defaults.set(false, forKey: "litter")
                     litterIdle()
+                    idleAnimation()
                     
                 }
             }
@@ -894,7 +895,7 @@ public class GameScene: SKScene {
     }
     
     func isDirty() -> Bool {
-        let prob = Int.random(in: 0..<2)
+        let prob = Int.random(in: 0..<5)
         if prob == 1 {
             return true
         }
@@ -927,7 +928,7 @@ public class GameScene: SKScene {
     }
     
     func isSick() -> Bool {
-        let prob = Int.random(in: 0..<2)
+        let prob = Int.random(in: 0..<10)
         if prob == 1 {
             return true
         }
