@@ -15,10 +15,10 @@ class HowToPlay: SKNode {
     var closeButton: SKSpriteNode = SKSpriteNode(imageNamed: "butX_normal")
     var closeButtonTextures: [SKTexture] = [SKTexture(imageNamed: "butX_normal"), SKTexture(imageNamed: "butX_pressed")]
     var closeButtonAction: (() -> Void)?
-    var HTPTitle: SKLabelNode = SKLabelNode(fontNamed: "Kongtext")
-    var HTPText: SKLabelNode = SKLabelNode(fontNamed: "Kongtext")
-    var AbtTitle: SKLabelNode = SKLabelNode(fontNamed: "Kongtext")
-    var AbtText: SKLabelNode = SKLabelNode(fontNamed: "Kongtext")
+    var HTPTitle: SKLabelNode = SKLabelNode(fontNamed: "Munro")
+    var HTPText: SKLabelNode = SKLabelNode(fontNamed: "Munro")
+    var AbtTitle: SKLabelNode = SKLabelNode(fontNamed: "Munro")
+    var AbtText: SKLabelNode = SKLabelNode(fontNamed: "Munro")
     
     override init() {
         super.init()
@@ -41,29 +41,27 @@ class HowToPlay: SKNode {
         
         HTPTitle.fontColor = .black
         HTPTitle.text = "How To Play"
-        HTPTitle.fontSize = 21
-        HTPTitle.position = CGPoint(x: 0, y: 270)
+        HTPTitle.fontSize = 40
+        HTPTitle.position = CGPoint(x: 0, y: 250)
         
         HTPText.fontColor = .black
         HTPText.text = "To take care of your Toti pay attention to his needs: The status bars on top, if he is sick, and if his litter box is clean. You can attend to them by tapping on Toti, on the buttons at the bottom of the screen and on his litter box. \n\nBy taking good care of him he will be happy and healthy, and love you forever."
         HTPText.numberOfLines = 0
-        HTPText.preferredMaxLayoutWidth = 290
-        HTPText.fontSize = 16
-        HTPText.position = CGPoint(x: 0, y: -90)
+        HTPText.preferredMaxLayoutWidth = 295
+        HTPText.fontSize = 22.5
+        HTPText.position = CGPoint(x: 0, y: -85)
         
         AbtTitle.fontColor = .black
         AbtTitle.text = "About Toti"
-        AbtTitle.fontSize = 21
-        AbtTitle.position = CGPoint(x: 0, y: -130)
+        AbtTitle.fontSize = 40
+        AbtTitle.position = CGPoint(x: 0, y: -150)
         
         AbtText.fontColor = .black
         AbtText.text = "Totigotchi was inspired by the best cat in the world, Prince Nicholas III. You can follow him on instagram @principenicholas."
         AbtText.numberOfLines = 0
-        AbtText.preferredMaxLayoutWidth = 290
-        AbtText.fontSize = 16
-        AbtText.position = CGPoint(x: 0, y: -285)
-        
-        
+        AbtText.preferredMaxLayoutWidth = 295
+        AbtText.fontSize = 22.5
+        AbtText.position = CGPoint(x: 0, y: -275)  
     }
     
     required init?(coder aDecoder: NSCoder) {
