@@ -3,13 +3,30 @@
 
 
 [![Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917](https://user-images.githubusercontent.com/48024795/194910375-06c62e08-f8e9-4cfb-97a3-5f89dacf9209.svg)](https://apps.apple.com/us/app/totigotchi/id1578772774)
-
-
+---------------------
+<br><br>
+### Demonstration 📱
 https://user-images.githubusercontent.com/48024795/194912518-1f2462c9-e26e-4345-be6c-8086e99815d1.mov
 
+<br>
+### Technology ✨
+<table>
+    <tr>
+        <td><b>Language</td>
+        <td>Swift</td>
+    </tr>
+    <tr>
+        <td><b>Framework</td>
+        <td>SpriteKit</td>
+    </tr>
+    <tr>
+        <td><b>Design</td>
+        <td>Piskel</td>
+    </tr>
+</table> 
+<br> 
 
-
-### Contributors
+### Contributors 👨🏼‍💻
 <table>
     <tr>
         <td align="center">
@@ -22,3 +39,5 @@ https://user-images.githubusercontent.com/48024795/194912518-1f2462c9-e26e-4345-
         </td>
     </tr>
 </table>
+
+
